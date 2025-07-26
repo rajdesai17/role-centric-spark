@@ -23,6 +23,14 @@ export const AdminDashboard: React.FC = () => {
     totalStores: 0,
     totalRatings: 0
   });
+  const [recentActivity, setRecentActivity] = useState<Array<{
+    type: string;
+    id: string;
+    title: string;
+    description: string;
+    timestamp: string;
+    data: any;
+  }>>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   // Get current tab from URL parameters
@@ -36,11 +44,19 @@ export const AdminDashboard: React.FC = () => {
   const loadDashboardData = async () => {
     try {
       setIsLoading(true);
-      const response = await apiService.getDashboard();
-      if (response.data) {
-        setDashboardData(response.data);
+      const [dashboardResponse, activityResponse] = await Promise.all([
+        apiService.getDashboard(),
+        apiService.getRecentActivity()
+      ]);
+      
+      if (dashboardResponse.data) {
+        setDashboardData(dashboardResponse.data);
       } else {
         showNotification('error', "Failed to load dashboard data");
+      }
+      
+      if (activityResponse.data) {
+        setRecentActivity(activityResponse.data.activities);
       }
     } catch (error) {
       showNotification('error', "Failed to load dashboard data");
@@ -141,36 +157,68 @@ export const AdminDashboard: React.FC = () => {
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
-                  <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
-                    <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                      <Users className="h-4 w-4 text-green-600" />
+                  {recentActivity.length > 0 ? (
+                    recentActivity.slice(0, 5).map((activity) => {
+                      const getIcon = () => {
+                        switch (activity.type) {
+                          case 'user_created':
+                            return <Users className="h-4 w-4 text-green-600" />;
+                          case 'store_created':
+                            return <Store className="h-4 w-4 text-blue-600" />;
+                          case 'rating_created':
+                            return <Star className="h-4 w-4 text-yellow-600" />;
+                          default:
+                            return <Activity className="h-4 w-4 text-gray-600" />;
+                        }
+                      };
+
+                      const getBgColor = () => {
+                        switch (activity.type) {
+                          case 'user_created':
+                            return 'bg-green-100';
+                          case 'store_created':
+                            return 'bg-blue-100';
+                          case 'rating_created':
+                            return 'bg-yellow-100';
+                          default:
+                            return 'bg-gray-100';
+                        }
+                      };
+
+                      const getTimeAgo = (timestamp: string) => {
+                        const now = new Date();
+                        const activityTime = new Date(timestamp);
+                        const diffInMinutes = Math.floor((now.getTime() - activityTime.getTime()) / (1000 * 60));
+                        
+                        if (diffInMinutes < 1) return 'Just now';
+                        if (diffInMinutes < 60) return `${diffInMinutes} min ago`;
+                        
+                        const diffInHours = Math.floor(diffInMinutes / 60);
+                        if (diffInHours < 24) return `${diffInHours} hour${diffInHours > 1 ? 's' : ''} ago`;
+                        
+                        const diffInDays = Math.floor(diffInHours / 24);
+                        return `${diffInDays} day${diffInDays > 1 ? 's' : ''} ago`;
+                      };
+
+                      return (
+                        <div key={activity.id} className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
+                          <div className={`w-8 h-8 ${getBgColor()} rounded-full flex items-center justify-center`}>
+                            {getIcon()}
+                          </div>
+                          <div className="flex-1">
+                            <div className="text-sm font-medium text-navy">{activity.title}</div>
+                            <div className="text-xs text-gray-500">{activity.description}</div>
+                          </div>
+                          <div className="text-xs text-gray-400">{getTimeAgo(activity.timestamp)}</div>
+                        </div>
+                      );
+                    })
+                  ) : (
+                    <div className="text-center py-8 text-gray-500">
+                      <Activity className="h-8 w-8 mx-auto mb-2 text-gray-400" />
+                      <p className="text-sm">No recent activity</p>
                     </div>
-                    <div className="flex-1">
-                      <div className="text-sm font-medium text-navy">New user registered</div>
-                      <div className="text-xs text-gray-500">John Doe joined the platform</div>
-                    </div>
-                    <div className="text-xs text-gray-400">2 min ago</div>
-                  </div>
-                  <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
-                    <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                      <Store className="h-4 w-4 text-blue-600" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="text-sm font-medium text-navy">Store added</div>
-                      <div className="text-xs text-gray-500">TechStore was registered</div>
-                    </div>
-                    <div className="text-xs text-gray-400">15 min ago</div>
-                  </div>
-                  <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
-                    <div className="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center">
-                      <Star className="h-4 w-4 text-yellow-600" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="text-sm font-medium text-navy">New rating submitted</div>
-                      <div className="text-xs text-gray-500">5-star review for CoffeeShop</div>
-                    </div>
-                    <div className="text-xs text-gray-400">1 hour ago</div>
-                  </div>
+                  )}
                 </div>
               </CardContent>
             </Card>

@@ -120,6 +120,21 @@ class ApiService {
     return this.handleResponse(response);
   }
 
+  async getRecentActivity(): Promise<ApiResponse<{ activities: Array<{
+    type: string;
+    id: string;
+    title: string;
+    description: string;
+    timestamp: string;
+    data: any;
+  }> }>> {
+    const response = await fetch(`${API_BASE_URL}/admin/recent-activity`, {
+      method: 'GET',
+      headers: this.getAuthHeaders(),
+    });
+    return this.handleResponse(response);
+  }
+
   // User endpoints
   async getUserStores(search?: string): Promise<ApiResponse<{ stores: any[] }>> {
     const params = new URLSearchParams();

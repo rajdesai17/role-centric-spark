@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import {
   getDashboard,
+  getRecentActivity,
   getUsers,
   createUser,
   getUserById,
@@ -21,6 +22,7 @@ const router = Router();
 router.use(authenticateToken, requireAdmin);
 
 router.get('/dashboard', getDashboard);
+router.get('/recent-activity', getRecentActivity);
 router.get('/users', validateSearchQuery, getUsers);
 router.post('/users', validateCreateUser, createUser);
 router.get('/users/:id', validateUUID, getUserById);

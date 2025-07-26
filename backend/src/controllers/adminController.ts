@@ -23,6 +23,95 @@ export const getDashboard = async (_req: Request, res: Response): Promise<Respon
   }
 };
 
+export const getRecentActivity = async (_req: Request, res: Response): Promise<Response> => {
+  try {
+    // Get recent users (last 10)
+    const recentUsers = await prisma.user.findMany({
+      take: 10,
+      orderBy: { createdAt: 'desc' },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+        createdAt: true,
+      },
+    });
+
+    // Get recent stores (last 10)
+    const recentStores = await prisma.store.findMany({
+      take: 10,
+      orderBy: { createdAt: 'desc' },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        createdAt: true,
+        owner: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    });
+
+    // Get recent ratings (last 10)
+    const recentRatings = await prisma.rating.findMany({
+      take: 10,
+      orderBy: { createdAt: 'desc' },
+      select: {
+        id: true,
+        rating: true,
+        createdAt: true,
+        user: {
+          select: {
+            name: true,
+          },
+        },
+        store: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    });
+
+    // Combine and sort all activities by creation date
+    const activities = [
+      ...recentUsers.map(user => ({
+        type: 'user_created',
+        id: user.id,
+        title: 'New user registered',
+        description: `${user.name} joined the platform`,
+        timestamp: user.createdAt,
+        data: user,
+      })),
+      ...recentStores.map(store => ({
+        type: 'store_created',
+        id: store.id,
+        title: 'Store added',
+        description: `${store.name} was registered by ${store.owner.name}`,
+        timestamp: store.createdAt,
+        data: store,
+      })),
+      ...recentRatings.map(rating => ({
+        type: 'rating_created',
+        id: rating.id,
+        title: 'New rating submitted',
+        description: `${rating.user.name} gave ${rating.rating} stars to ${rating.store.name}`,
+        timestamp: rating.createdAt,
+        data: rating,
+      })),
+    ].sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
+    .slice(0, 10); // Get top 10 most recent activities
+
+    return res.json({ activities });
+  } catch (error) {
+    console.error('Get recent activity error:', error);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
 export const getUsers = async (req: Request, res: Response): Promise<Response> => {
   try {
     const { search, role, sortBy = 'createdAt', sortOrder = 'desc' } = req.query;
