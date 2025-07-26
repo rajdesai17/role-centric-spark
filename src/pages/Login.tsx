@@ -106,51 +106,6 @@ export const Login: React.FC = () => {
               </Button>
             </form>
 
-            {/* Demo Accounts Section */}
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <span className="w-full border-t border-gray-200" />
-              </div>
-              <div className="relative flex justify-center text-sm uppercase">
-                <span className="bg-white px-4 text-gray-500 font-medium">Quick Demo</span>
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <div className="text-center text-gray-600 mb-4">
-                Try demo accounts:
-              </div>
-              <div className="grid grid-cols-1 gap-3">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => handleDemoLogin('admin')}
-                  className="border-gray-200 hover:border-blue hover:bg-blue/5 transition-colors rounded-full"
-                >
-                  <Zap className="h-4 w-4 mr-2" />
-                  Admin Demo
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => handleDemoLogin('user')}
-                  className="border-gray-200 hover:border-blue hover:bg-blue/5 transition-colors rounded-full"
-                >
-                  <Zap className="h-4 w-4 mr-2" />
-                  User Demo
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => handleDemoLogin('store_owner')}
-                  className="border-gray-200 hover:border-blue hover:bg-blue/5 transition-colors rounded-full"
-                >
-                  <Zap className="h-4 w-4 mr-2" />
-                  Store Owner Demo
-                </Button>
-              </div>
-            </div>
-
             {/* Sign Up Link */}
             <div className="text-center pt-6">
               <p className="text-gray-600">
