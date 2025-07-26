@@ -18,6 +18,8 @@ interface Store {
   ownerId: string;
   createdAt: string;
   updatedAt: string;
+  averageRating?: number;
+  totalRatings?: number;
 }
 
 export const StoreManagement: React.FC = () => {
@@ -143,10 +145,21 @@ export const StoreManagement: React.FC = () => {
                     <TableCell>{store.email}</TableCell>
                     <TableCell className="max-w-xs truncate">{store.address}</TableCell>
                     <TableCell>
-                      <span className="text-muted-foreground">-</span>
+                      {store.averageRating ? (
+                        <div className="flex items-center gap-1">
+                          <span className="font-medium">{store.averageRating.toFixed(1)}</span>
+                          <span className="text-xs text-muted-foreground">⭐</span>
+                        </div>
+                      ) : (
+                        <span className="text-muted-foreground">No ratings</span>
+                      )}
                     </TableCell>
                     <TableCell>
-                      <span className="text-muted-foreground">-</span>
+                      {store.totalRatings ? (
+                        <span className="font-medium">{store.totalRatings}</span>
+                      ) : (
+                        <span className="text-muted-foreground">0</span>
+                      )}
                     </TableCell>
                   </TableRow>
                 ))

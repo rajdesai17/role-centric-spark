@@ -17,6 +17,15 @@ interface Store {
   ownerId: string;
   createdAt: string;
   updatedAt: string;
+  averageRating: number;
+  totalRatings: number;
+  userRating?: number;
+}
+
+interface UserRating {
+  id: string;
+  rating: number;
+  createdAt: string;
 }
 
 export const StoreExplorer: React.FC = () => {
@@ -47,9 +56,15 @@ export const StoreExplorer: React.FC = () => {
     }
   };
 
-  const getUserRating = (storeId: string) => {
-    // This would need to be implemented with real data
-    // For now, return undefined since we don't have user rating data in the stores response
+  const getUserRating = (storeId: string): UserRating | undefined => {
+    const store = stores.find(s => s.id === storeId);
+    if (store?.userRating) {
+      return {
+        id: storeId, // Using storeId as fallback since we don't have rating ID
+        rating: store.userRating,
+        createdAt: store.createdAt // Using store creation date as fallback
+      };
+    }
     return undefined;
   };
 
@@ -122,9 +137,17 @@ export const StoreExplorer: React.FC = () => {
                     <div>
                       <div className="flex items-center gap-2">
                         <span className="text-sm font-medium">Overall Rating:</span>
-                        <span className="text-sm text-muted-foreground">
-                          Not available
-                        </span>
+                        {store.averageRating > 0 ? (
+                          <div className="flex items-center gap-1">
+                            <span className="text-sm font-medium">{store.averageRating.toFixed(1)}</span>
+                            <div className="flex">
+                              {renderStars(Math.round(store.averageRating))}
+                            </div>
+                            <span className="text-xs text-muted-foreground">({store.totalRatings} reviews)</span>
+                          </div>
+                        ) : (
+                          <span className="text-sm text-muted-foreground">No ratings yet</span>
+                        )}
                       </div>
                     </div>
                   </div>

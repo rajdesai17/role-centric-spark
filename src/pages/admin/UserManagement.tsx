@@ -19,6 +19,8 @@ interface User {
   role: 'SYSTEM_ADMIN' | 'NORMAL_USER' | 'STORE_OWNER';
   createdAt: string;
   updatedAt: string;
+  averageRating?: number;
+  totalRatings?: number;
 }
 
 export const UserManagement: React.FC = () => {
@@ -167,7 +169,14 @@ export const UserManagement: React.FC = () => {
                       </Badge>
                     </TableCell>
                     <TableCell>
-                      <span className="text-muted-foreground">-</span>
+                      {user.role === 'STORE_OWNER' && user.averageRating ? (
+                        <div className="flex items-center gap-1">
+                          <span className="font-medium">{user.averageRating}</span>
+                          <span className="text-xs text-muted-foreground">({user.totalRatings} reviews)</span>
+                        </div>
+                      ) : (
+                        <span className="text-muted-foreground">-</span>
+                      )}
                     </TableCell>
                   </TableRow>
                 ))

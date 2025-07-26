@@ -47,21 +47,44 @@ export const getUsers = async (req: Request, res: Response): Promise<Response> =
     const users = await prisma.user.findMany({
       where,
       orderBy,
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        address: true,
-        role: true,
-        createdAt: true,
-        updatedAt: true,
+      include: {
+        stores: {
+          include: {
+            ratings: {
+              select: {
+                rating: true,
+              },
+            },
+          },
+        },
       },
+    });
+
+    const usersWithRating = users.map(user => {
+      let averageRating = 0;
+      let totalRatings = 0;
+
+      if (user.role === 'STORE_OWNER' && user.stores.length > 0) {
+        const allRatings = user.stores.flatMap(store => store.ratings);
+        totalRatings = allRatings.length;
+        if (totalRatings > 0) {
+          averageRating = allRatings.reduce((sum, r) => sum + r.rating, 0) / totalRatings;
+        }
+      }
+
+      const { stores, ...userWithoutStores } = user;
+
+      return {
+        ...userWithoutStores,
+        averageRating: Math.round(averageRating * 10) / 10, // Round to 1 decimal place
+        totalRatings,
+      };
     });
 
     const total = await prisma.user.count({ where });
 
     return res.json({
-      users,
+      users: usersWithRating,
       total,
     });
   } catch (error) {

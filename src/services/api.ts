@@ -161,6 +161,14 @@ class ApiService {
     return this.handleResponse(response);
   }
 
+  async getUserRating(storeId: string): Promise<ApiResponse<{ rating: any }>> {
+    const response = await fetch(`${API_BASE_URL}/ratings/${storeId}`, {
+      method: 'GET',
+      headers: this.getAuthHeaders(),
+    });
+    return this.handleResponse(response);
+  }
+
   // Store Owner endpoints
   async getStoreOwnerDashboard(): Promise<ApiResponse<{ ratings: any[]; avgRating: number }>> {
     const response = await fetch(`${API_BASE_URL}/store-owner/dashboard`, {

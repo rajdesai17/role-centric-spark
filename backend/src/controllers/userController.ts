@@ -175,3 +175,33 @@ export const getProfile = async (req: AuthRequest, res: Response): Promise<Respo
     return res.status(500).json({ error: 'Internal server error' });
   }
 };
+
+export const getUserRating = async (req: AuthRequest, res: Response): Promise<Response> => {
+  try {
+    const userId = req.user?.id;
+    const { storeId } = req.params;
+
+    if (!userId) {
+      return res.status(401).json({ error: 'Authentication required' });
+    }
+
+    const rating = await prisma.rating.findUnique({
+      where: {
+        userId_storeId: {
+          userId,
+          storeId,
+        },
+      },
+      select: {
+        id: true,
+        rating: true,
+        createdAt: true,
+      },
+    });
+
+    return res.json({ rating });
+  } catch (error) {
+    console.error('Get user rating error:', error);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+};
