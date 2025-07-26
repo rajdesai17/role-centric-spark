@@ -19,7 +19,6 @@ const queryClient = new QueryClient();
 const DashboardRouter = () => {
   const { user, isLoading } = useAuth();
   
-  // Show minimal loading state while authentication is being initialized
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">

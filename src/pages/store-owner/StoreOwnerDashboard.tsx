@@ -62,39 +62,43 @@ export const StoreOwnerDashboard: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <>
         <Navbar />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="bg-white rounded-xl border border-gray-200 p-8">
-            <div className="flex flex-col items-center justify-center py-12">
-              <div className="w-12 h-12 bg-purple-pink-gradient rounded-xl flex items-center justify-center mb-4">
-                <Activity className="h-6 w-6 text-white" />
+        <div className="pt-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div className="bg-white rounded-xl border border-gray-200 p-8">
+              <div className="flex flex-col items-center justify-center py-12">
+                <div className="w-12 h-12 bg-purple-pink-gradient rounded-xl flex items-center justify-center mb-4">
+                  <Activity className="h-6 w-6 text-white" />
+                </div>
+                <h2 className="text-xl font-bold text-navy mb-2">Loading...</h2>
+                <p className="text-gray-600">Fetching your store data...</p>
               </div>
-              <h2 className="text-xl font-bold text-navy mb-2">Loading...</h2>
-              <p className="text-gray-600">Fetching your store data...</p>
             </div>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 
   if (!dashboardData) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <>
         <Navbar />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="bg-white rounded-xl border border-gray-200 p-8">
-            <div className="flex flex-col items-center justify-center py-12">
-              <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center mb-4">
-                <Store className="h-6 w-6 text-gray-400" />
+        <div className="pt-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div className="bg-white rounded-xl border border-gray-200 p-8">
+              <div className="flex flex-col items-center justify-center py-12">
+                <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center mb-4">
+                  <Store className="h-6 w-6 text-gray-400" />
+                </div>
+                <h2 className="text-xl font-bold text-navy mb-2">No Store Found</h2>
+                <p className="text-gray-600">You don't have a store associated with your account.</p>
               </div>
-              <h2 className="text-xl font-bold text-navy mb-2">No Store Found</h2>
-              <p className="text-gray-600">You don't have a store associated with your account.</p>
             </div>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 
@@ -110,10 +114,10 @@ export const StoreOwnerDashboard: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <>
       <Navbar />
-      
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <div className="pt-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center space-x-3 mb-4">
@@ -207,7 +211,8 @@ export const StoreOwnerDashboard: React.FC = () => {
             )}
           </div>
         </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 };

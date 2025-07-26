@@ -12,10 +12,19 @@ export const Navbar: React.FC = () => {
     navigate('/login');
   };
 
-  if (!user) return null;
+  // Always render navbar structure to prevent layout shifts
+  if (!user) {
+    return (
+      <nav className="fixed top-4 left-4 right-4 z-50 bg-white rounded-full shadow-card border border-gray-100 opacity-0 pointer-events-none">
+        <div className="max-w-7xl mx-auto px-6 py-3">
+          <div className="h-10" />
+        </div>
+      </nav>
+    );
+  }
 
   return (
-    <nav className="sticky top-4 mx-4 mt-4 bg-white rounded-full shadow-card border border-gray-100">
+    <nav className="fixed top-4 left-4 right-4 z-50 bg-white rounded-full shadow-card border border-gray-100">
       <div className="max-w-7xl mx-auto px-6 py-3">
         <div className="flex justify-between items-center">
           <div className="flex items-center space-x-6">

@@ -27,7 +27,6 @@ export const Login: React.FC = () => {
     try {
       const result = await login(email, password);
       if (result.success) {
-        toast.success("Login successful!");
         setRetryCount(0); // Reset retry count on success
         navigate("/dashboard");
       } else {

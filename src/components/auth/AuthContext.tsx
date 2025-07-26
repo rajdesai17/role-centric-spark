@@ -50,13 +50,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         localStorage.removeItem('currentUser');
         localStorage.removeItem('authToken');
       }
-      // Set loading to false immediately after initialization
+      // Set loading to false immediately to prevent layout shifts
       setIsLoading(false);
     };
 
-    // Use setTimeout to ensure this runs after the initial render
-    const timer = setTimeout(initializeAuth, 0);
-    return () => clearTimeout(timer);
+    // Initialize immediately - no setTimeout delay
+    initializeAuth();
   }, []);
 
   const login = async (email: string, password: string): Promise<{ success: boolean; error?: string }> => {
