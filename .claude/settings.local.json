@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(npm init:*)",
+      "Bash(npm install:*)",
+      "Bash(npx prisma:*)",
+      "Bash(npm run build:*)",
+      "Bash($env:Path += \";C:\\Program Files\\PostgreSQL\\17\\bin\")",
+      "Bash(npm run:*)"
+    ],
+    "deny": []
+  }
+}

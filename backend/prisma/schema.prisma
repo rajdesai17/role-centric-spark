@@ -1,0 +1,67 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  SYSTEM_ADMIN
+  NORMAL_USER
+  STORE_OWNER
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String   @db.VarChar(60)
+  email     String   @unique @db.VarChar(255)
+  password  String   @db.VarChar(255)
+  address   String?  @db.VarChar(400)
+  role      Role     @default(NORMAL_USER)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  stores  Store[]
+  ratings Rating[]
+
+  @@map("users")
+}
+
+model Store {
+  id        String   @id @default(uuid())
+  name      String   @db.VarChar(255)
+  email     String   @db.VarChar(255)
+  address   String   @db.VarChar(400)
+  ownerId   String   @map("owner_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  owner   User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  ratings Rating[]
+
+  @@map("stores")
+}
+
+model Rating {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  storeId   String   @map("store_id")
+  rating    Int      @db.Integer
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  store Store @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  // Constraints
+  @@unique([userId, storeId])
+  @@map("ratings")
+}

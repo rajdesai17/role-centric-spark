@@ -1,0 +1,3 @@
+gi[33mb0b50e3[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m feat: Add JWT authentication and role management
+[33m12fe6ff[m feat: Implement role-based frontend
+[33m48f1dcd[m Use tech stack vite_react_shadcn_ts
