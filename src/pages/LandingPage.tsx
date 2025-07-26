@@ -59,18 +59,10 @@ const LandingPage = () => {
                 RoleApp
               </span>
             </div>
-            <div className="hidden md:flex items-center space-x-6">
-              <a href="#features" className="text-sm font-medium text-gray-600 hover:text-navy transition-colors">
+            <div className="hidden md:flex items-center space-x-3">
+              <a href="#features" className="text-sm font-medium text-gray-600 hover:text-navy transition-colors rounded-full px-4 py-2">
                 Features
               </a>
-              <a href="#pricing" className="text-sm font-medium text-gray-600 hover:text-navy transition-colors">
-                Pricing
-              </a>
-              <a href="#contact" className="text-sm font-medium text-gray-600 hover:text-navy transition-colors">
-                Contact
-              </a>
-            </div>
-            <div className="flex items-center space-x-3">
               <Button 
                 variant="ghost" 
                 size="sm" 
