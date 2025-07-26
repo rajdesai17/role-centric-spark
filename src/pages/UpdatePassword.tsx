@@ -84,11 +84,11 @@ export const UpdatePassword: React.FC = () => {
       icon={Lock}
     >
       <div className="max-w-md mx-auto">
-        <Card className="shadow-soft">
+        <Card className="shadow-lg border-0 bg-white/80 backdrop-blur-sm">
           <CardContent className="p-6">
-            <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-              <h4 className="text-sm font-medium text-blue-800 mb-2">Password Requirements:</h4>
-              <ul className="text-xs text-blue-700 space-y-1">
+            <div className="mb-6 p-4 bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 rounded-xl">
+              <h4 className="text-sm font-medium text-purple-800 mb-2">Password Requirements:</h4>
+              <ul className="text-xs text-purple-700 space-y-1">
                 <li>• 8-16 characters long</li>
                 <li>• At least 1 uppercase letter</li>
                 <li>• At least 1 special character</li>
@@ -141,7 +141,7 @@ export const UpdatePassword: React.FC = () => {
                 </Button>
                 <Button
                   type="submit"
-                  className="flex-1 bg-purple-pink-gradient text-white font-medium hover:opacity-90 transition"
+                  className="flex-1 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
                   disabled={isLoading}
                 >
                   {isLoading ? "Updating..." : "Update Password"}

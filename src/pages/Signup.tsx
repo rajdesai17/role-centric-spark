@@ -90,7 +90,7 @@ export const Signup: React.FC = () => {
             variant="ghost"
             size="sm"
             onClick={() => navigate('/')}
-            className="text-gray-600 hover:text-navy transition-colors rounded-full"
+            className="text-slate-600 hover:text-slate-900 transition-colors rounded-full"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Home
@@ -101,12 +101,12 @@ export const Signup: React.FC = () => {
         <Card className="card p-4">
           <CardHeader className="text-center pb-4">
             <div className="flex items-center justify-center mb-3">
-              <div className="w-10 h-10 bg-purple-pink-gradient rounded-lg flex items-center justify-center">
+              <div className="w-10 h-10 bg-slate-900 rounded-lg flex items-center justify-center shadow-lg">
                 <UserPlus className="h-5 w-5 text-white" />
               </div>
             </div>
-            <CardTitle className="text-xl font-bold text-navy">Create Account</CardTitle>
-            <CardDescription className="text-gray-600 mt-1 text-sm">
+            <CardTitle className="text-xl font-bold text-slate-900">Create Account</CardTitle>
+            <CardDescription className="text-slate-600 mt-1 text-sm">
               Join as a new user to explore stores and rate them
             </CardDescription>
           </CardHeader>
@@ -166,7 +166,7 @@ export const Signup: React.FC = () => {
 
               <Button
                 type="submit"
-                className="w-full btn-cta py-2 text-sm"
+                className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-2xl py-2 text-sm shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
                 disabled={isLoading}
               >
                 {isLoading ? "Creating Account..." : "Create Account"}
@@ -175,11 +175,11 @@ export const Signup: React.FC = () => {
 
             {/* Sign In Link */}
             <div className="text-center pt-2">
-              <p className="text-gray-600 text-xs">
+              <p className="text-slate-600 text-xs">
                 Already have an account?{" "}
                 <Link
                   to="/login"
-                  className="text-blue font-bold hover:underline transition-colors"
+                  className="text-purple-600 font-bold hover:underline transition-colors"
                 >
                   Sign in
                 </Link>
@@ -190,17 +190,17 @@ export const Signup: React.FC = () => {
 
         {/* Trust Indicators */}
         <div className="mt-8 text-center">
-          <div className="flex items-center justify-center space-x-8 text-sm text-gray-500">
+          <div className="flex items-center justify-center space-x-8 text-sm text-slate-500">
             <div className="flex items-center space-x-2">
               <div className="w-2 h-2 bg-green-500 rounded-full"></div>
               <span>Secure Registration</span>
             </div>
             <div className="flex items-center space-x-2">
-              <div className="w-2 h-2 bg-blue rounded-full"></div>
+              <div className="w-2 h-2 bg-slate-900 rounded-full"></div>
               <span>Privacy Protected</span>
             </div>
             <div className="flex items-center space-x-2">
-              <div className="w-2 h-2 bg-orange rounded-full"></div>
+              <div className="w-2 h-2 bg-slate-700 rounded-full"></div>
               <span>Free to Join</span>
             </div>
           </div>

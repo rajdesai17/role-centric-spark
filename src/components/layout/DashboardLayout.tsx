@@ -15,7 +15,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
   icon: Icon 
 }) => {
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen bg-white flex">
       {/* Sidebar */}
       <Sidebar />
       
@@ -27,14 +27,14 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
             <div className="mb-8">
               <div className="flex items-center space-x-3 mb-2">
                 {Icon && (
-                  <div className="w-10 h-10 bg-purple-pink-gradient rounded-xl flex items-center justify-center">
+                  <div className="w-10 h-10 bg-slate-900 rounded-xl flex items-center justify-center shadow-lg">
                     <Icon className="h-5 w-5 text-white" />
                   </div>
                 )}
                 <div>
-                  <h1 className="text-2xl font-bold text-navy">{title}</h1>
+                  <h1 className="text-2xl font-bold text-slate-900">{title}</h1>
                   {subtitle && (
-                    <p className="text-gray-600 mt-1">{subtitle}</p>
+                    <p className="text-slate-600 mt-1">{subtitle}</p>
                   )}
                 </div>
               </div>

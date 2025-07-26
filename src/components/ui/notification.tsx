@@ -43,22 +43,22 @@ const NotificationItem = ({ notification, onRemove }: { notification: Notificati
   const bgColor = {
     success: 'bg-green-50 border-green-200',
     error: 'bg-red-50 border-red-200',
-    info: 'bg-blue-50 border-blue-200'
+    info: 'bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200'
   }[notification.type];
 
   const textColor = {
     success: 'text-green-800',
     error: 'text-red-800',
-    info: 'text-blue-800'
+    info: 'text-purple-800'
   }[notification.type];
 
   return (
-    <div className={`flex items-center p-4 border rounded-lg shadow-sm ${bgColor} animate-in slide-in-from-right-full duration-300`}>
+    <div className={`flex items-center p-4 border rounded-xl shadow-lg backdrop-blur-sm ${bgColor} animate-in slide-in-from-right-full duration-300`}>
       <NotificationIcon type={notification.type} />
       <span className={`ml-3 text-sm font-medium ${textColor}`}>{notification.message}</span>
       <button
         onClick={() => onRemove(notification.id)}
-        className="ml-auto text-gray-400 hover:text-gray-600 transition-colors"
+        className="ml-auto text-slate-400 hover:text-slate-600 transition-colors"
       >
         <X className="h-4 w-4" />
       </button>

@@ -87,7 +87,7 @@ export const AdminDashboard: React.FC = () => {
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center space-x-2">
-                    <div className="w-8 h-8 bg-purple-pink-gradient rounded-lg flex items-center justify-center">
+                    <div className="w-8 h-8 bg-slate-900 rounded-lg flex items-center justify-center">
                       <Users className="h-4 w-4 text-white" />
                     </div>
                     <span>User Management</span>
@@ -99,7 +99,7 @@ export const AdminDashboard: React.FC = () => {
                   </p>
                   <Button
                     onClick={() => setShowAddUserModal(true)}
-                    className="bg-purple-pink-gradient text-white font-medium rounded-lg hover:opacity-90 transition"
+                    className="bg-slate-900 text-white font-medium rounded-lg hover:opacity-90 transition"
                   >
                     <Plus className="h-4 w-4 mr-2" />
                     Add New User
@@ -110,7 +110,7 @@ export const AdminDashboard: React.FC = () => {
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center space-x-2">
-                    <div className="w-8 h-8 bg-purple-pink-gradient rounded-lg flex items-center justify-center">
+                    <div className="w-8 h-8 bg-slate-900 rounded-lg flex items-center justify-center">
                       <Store className="h-4 w-4 text-white" />
                     </div>
                     <span>Store Management</span>
@@ -122,7 +122,7 @@ export const AdminDashboard: React.FC = () => {
                   </p>
                   <Button
                     onClick={() => setShowAddStoreModal(true)}
-                    className="bg-purple-pink-gradient text-white font-medium rounded-lg hover:opacity-90 transition"
+                    className="bg-slate-900 text-white font-medium rounded-lg hover:opacity-90 transition"
                   >
                     <Plus className="h-4 w-4 mr-2" />
                     Add New Store
@@ -203,12 +203,12 @@ export const AdminDashboard: React.FC = () => {
       <Dialog open={showAddUserModal} onOpenChange={setShowAddUserModal}>
         <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle className="flex items-center space-x-2">
+            {/* <DialogTitle className="flex items-center space-x-2">
               <div className="w-6 h-6 bg-purple-pink-gradient rounded-lg flex items-center justify-center">
                 <Users className="h-3 w-3 text-white" />
               </div>
               <span>Add New User</span>
-            </DialogTitle>
+            </DialogTitle> */}
           </DialogHeader>
           <div className="mt-4">
             <AddUserForm />
@@ -220,12 +220,12 @@ export const AdminDashboard: React.FC = () => {
       <Dialog open={showAddStoreModal} onOpenChange={setShowAddStoreModal}>
         <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle className="flex items-center space-x-2">
+            {/* <DialogTitle className="flex items-center space-x-2">
               <div className="w-6 h-6 bg-purple-pink-gradient rounded-lg flex items-center justify-center">
                 <Store className="h-3 w-3 text-white" />
               </div>
               <span>Add New Store</span>
-            </DialogTitle>
+            </DialogTitle> */}
           </DialogHeader>
           <div className="mt-4">
             <AddStoreForm />

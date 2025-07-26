@@ -22,7 +22,7 @@ const DashboardRouter = () => {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="flex items-center space-x-3">
-          <div className="w-6 h-6 bg-purple-pink-gradient rounded-full animate-spin"></div>
+          <div className="w-6 h-6 bg-slate-900 rounded-full animate-spin"></div>
           <span className="text-gray-600 font-medium">Loading...</span>
         </div>
       </div>

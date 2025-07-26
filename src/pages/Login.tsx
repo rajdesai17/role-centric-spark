@@ -71,12 +71,12 @@ export const Login: React.FC = () => {
       <div className="w-full max-w-lg">
         {/* Back to Landing Page */}
         <div className="mb-8">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => navigate('/')}
-            className="text-gray-600 hover:text-navy transition-colors rounded-full"
-          >
+                      <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => navigate('/')}
+              className="text-slate-600 hover:text-slate-900 transition-colors rounded-full"
+            >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Home
           </Button>
@@ -86,12 +86,12 @@ export const Login: React.FC = () => {
         <Card className="card p-8">
           <CardHeader className="text-center pb-8">
             <div className="flex items-center justify-center mb-6">
-              <div className="w-16 h-16 bg-purple-pink-gradient rounded-2xl flex items-center justify-center">
+              <div className="w-16 h-16 bg-slate-900 rounded-2xl flex items-center justify-center shadow-lg">
                 <Shield className="h-8 w-8 text-white" />
               </div>
             </div>
-            <CardTitle className="text-3xl font-bold text-navy">Welcome Back</CardTitle>
-            <CardDescription className="text-gray-600 mt-3 text-lg">
+            <CardTitle className="text-3xl font-bold text-slate-900">Welcome Back</CardTitle>
+            <CardDescription className="text-slate-600 mt-3 text-lg">
               Sign in to your account to continue
             </CardDescription>
           </CardHeader>
@@ -120,7 +120,7 @@ export const Login: React.FC = () => {
 
               <Button
                 type="submit"
-                className="w-full btn-cta py-4 text-lg"
+                className="w-full bg-slate-900 text-white font-semibold rounded-2xl py-4 text-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
                 disabled={isLoading || retryCount >= 3}
               >
                 {isLoading ? "Signing in..." : retryCount >= 3 ? "Too Many Attempts" : "Sign In"}
@@ -135,11 +135,11 @@ export const Login: React.FC = () => {
 
             {/* Sign Up Link */}
             <div className="text-center pt-6">
-              <p className="text-gray-600">
+              <p className="text-slate-600">
                 Don't have an account?{" "}
                 <Link
                   to="/signup"
-                  className="text-blue font-bold hover:underline transition-colors"
+                  className="text-purple-600 font-bold hover:underline transition-colors"
                 >
                   Sign up
                 </Link>
@@ -150,17 +150,17 @@ export const Login: React.FC = () => {
 
         {/* Trust Indicators */}
         <div className="mt-8 text-center">
-          <div className="flex items-center justify-center space-x-8 text-sm text-gray-500">
+          <div className="flex items-center justify-center space-x-8 text-sm text-slate-500">
             <div className="flex items-center space-x-2">
               <div className="w-2 h-2 bg-green-500 rounded-full"></div>
               <span>Secure Login</span>
             </div>
             <div className="flex items-center space-x-2">
-              <div className="w-2 h-2 bg-blue rounded-full"></div>
+              <div className="w-2 h-2 bg-purple-600 rounded-full"></div>
               <span>SSL Encrypted</span>
             </div>
             <div className="flex items-center space-x-2">
-              <div className="w-2 h-2 bg-orange rounded-full"></div>
+              <div className="w-2 h-2 bg-pink-600 rounded-full"></div>
               <span>24/7 Support</span>
             </div>
           </div>

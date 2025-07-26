@@ -8,7 +8,7 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 240 10% 98%;
+    --background: 0 0% 100%;
     --foreground: 240 10% 9%;
 
     --card: 0 0% 100%;
@@ -17,9 +17,9 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 9%;
 
-    --primary: 221 83% 53%;
+    --primary: 262 83% 58%;
     --primary-foreground: 0 0% 98%;
-    --primary-glow: 221 83% 65%;
+    --primary-glow: 262 83% 65%;
 
     --secondary: 240 5% 96%;
     --secondary-foreground: 240 6% 10%;
@@ -41,23 +41,23 @@ All colors MUST be HSL.
 
     --border: 240 6% 90%;
     --input: 240 6% 90%;
-    --ring: 221 83% 53%;
+    --ring: 262 83% 58%;
 
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(221 83% 53%), hsl(221 83% 65%));
-    --gradient-subtle: linear-gradient(180deg, hsl(240 10% 98%), hsl(240 5% 96%));
+    /* Gradients - Updated to match landing page */
+    --gradient-primary: linear-gradient(135deg, #C471F5 0%, #FA71CD 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(0 0% 100%), hsl(240 5% 96%));
     
     /* Shadows */
-    --shadow-elegant: 0 10px 30px -10px hsl(221 83% 53% / 0.2);
+    --shadow-elegant: 0 10px 30px -10px hsl(262 83% 58% / 0.2);
     --shadow-soft: 0 4px 20px -4px hsl(240 10% 9% / 0.1);
 
     --radius: 0.5rem;
 
-    --sidebar-background: 0 0% 98%;
+    --sidebar-background: 0 0% 100%;
 
     --sidebar-foreground: 240 5.3% 26.1%;
 
-    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary: 262 83% 58%;
 
     --sidebar-primary-foreground: 0 0% 98%;
 
@@ -67,7 +67,7 @@ All colors MUST be HSL.
 
     --sidebar-border: 220 13% 91%;
 
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-ring: 262 83% 58%;
   }
 
   .dark {
@@ -115,7 +115,7 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-peach-gradient font-sans text-navy;
+    @apply bg-white font-sans text-navy;
   }
 
   h1, .hero-title {
@@ -136,5 +136,15 @@ All colors MUST be HSL.
 
   .btn-cta {
     @apply bg-orange text-white font-bold rounded-full px-8 py-3 text-lg shadow-cta hover:bg-orange/90 transition;
+  }
+
+  /* Landing page override to remove peach gradient */
+  .landing-page-override {
+    background: white !important;
+  }
+  
+  /* Override body background for landing page */
+  .landing-page-override body {
+    background: white !important;
   }
 }

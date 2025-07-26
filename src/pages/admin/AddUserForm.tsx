@@ -100,7 +100,9 @@ export const AddUserForm: React.FC = () => {
     <Card className="shadow-soft">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <UserPlus className="h-5 w-5" />
+          <div className="w-8 h-8 bg-slate-900 rounded-lg flex items-center justify-center">
+            <UserPlus className="h-4 w-4 text-white" />
+          </div>
           Add New User
         </CardTitle>
       </CardHeader>
