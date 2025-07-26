@@ -150,24 +150,24 @@ const LandingPage = () => {
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section className="relative overflow-hidden pt-24 pb-20">
+            {/* Hero Section */}
+      <section className="relative overflow-hidden pt-16 pb-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-                    <Badge className="mb-8 px-4 py-2 text-sm font-medium bg-purple-700 text-white rounded-full shadow-sm">
-          <Sparkles className="h-4 w-4 mr-2" />
-          Modern Role Management Platform
-        </Badge>
+            <Badge className="mb-6 px-4 py-2 text-sm font-medium bg-purple-700 text-white rounded-full shadow-sm">
+              <Sparkles className="h-4 w-4 mr-2" />
+              Modern Role Management Platform
+            </Badge>
             
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-slate-900 mb-8 leading-tight">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-slate-900 mb-6 leading-tight">
               Store Rating System
             </h1>
             
-            <p className="text-xl md:text-2xl text-slate-600 mb-12 max-w-4xl mx-auto leading-relaxed font-normal">
+            <p className="text-xl md:text-2xl text-slate-600 mb-8 max-w-4xl mx-auto leading-relaxed font-normal">
               A comprehensive platform for managing users, stores, and customer ratings with role-based access control.
             </p>
 
-            <div className="flex justify-center items-center mb-16">
+            <div className="flex justify-center items-center mb-8">
               <Button 
                 size="lg" 
                 className="bg-slate-900 text-white font-semibold rounded-2xl px-8 py-4 text-lg shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
@@ -184,10 +184,10 @@ const LandingPage = () => {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-20 bg-white">
+      <section id="features" className="py-12 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-purple-700 mb-6">
+          <div className="text-center mb-8">
+            <h2 className="text-4xl md:text-5xl font-bold text-purple-700 mb-4">
               Features
             </h2>
           </div>
