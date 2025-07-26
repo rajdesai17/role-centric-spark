@@ -10,11 +10,14 @@ import {
   ArrowRight, 
   CheckCircle2,
   Star,
-  TrendingUp
+  TrendingUp,
+  Menu
 } from "lucide-react";
+import { useState } from "react";
 
 const LandingPage = () => {
   const navigate = useNavigate();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const features = [
     {
@@ -49,8 +52,9 @@ const LandingPage = () => {
     <div className="min-h-screen">
       {/* Navigation Header */}
       <nav className="sticky top-4 mx-4 mt-4 bg-white rounded-full shadow-card border border-gray-100">
-        <div className="max-w-7xl mx-auto px-6 py-3">
+        <div className="max-w-7xl mx-auto px-4 py-2">
           <div className="flex justify-between items-center">
+            {/* Logo */}
             <div className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-purple-pink-gradient rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">R</span>
@@ -59,7 +63,9 @@ const LandingPage = () => {
                 RoleApp
               </span>
             </div>
-            <div className="hidden md:flex items-center space-x-3">
+
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center space-x-4">
               <a href="#features" className="text-sm font-medium text-gray-600 hover:text-navy transition-colors rounded-full px-4 py-2">
                 Features
               </a>
@@ -74,12 +80,50 @@ const LandingPage = () => {
               <Button 
                 size="sm" 
                 onClick={() => navigate('/signup')}
-                className="bg-orange text-white font-bold rounded-full px-6 py-2 shadow-cta hover:bg-orange/90 transition"
+                className="bg-purple-pink-gradient text-white font-bold rounded-full px-6 py-2 shadow-cta hover:opacity-90 transition"
               >
                 Get Started
               </Button>
             </div>
+
+            {/* Mobile Menu Button */}
+            <div className="md:hidden">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="rounded-full"
+              >
+                <Menu className="h-5 w-5" />
+              </Button>
+            </div>
           </div>
+
+          {/* Mobile Menu */}
+          {isMobileMenuOpen && (
+            <div className="md:hidden mt-4 pb-4 border-t border-gray-100">
+              <div className="flex flex-col space-y-3 pt-4">
+                <a href="#features" className="text-sm font-medium text-gray-600 hover:text-navy transition-colors px-4 py-2">
+                  Features
+                </a>
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  onClick={() => navigate('/login')}
+                  className="text-gray-600 hover:text-navy justify-start"
+                >
+                  Sign In
+                </Button>
+                <Button 
+                  size="sm" 
+                  onClick={() => navigate('/signup')}
+                  className="bg-purple-pink-gradient text-white font-bold shadow-cta hover:opacity-90 transition justify-start"
+                >
+                  Get Started
+                </Button>
+              </div>
+            </div>
+          )}
         </div>
       </nav>
 
@@ -87,22 +131,22 @@ const LandingPage = () => {
       <section className="relative overflow-hidden pt-20 pb-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <Badge variant="secondary" className="mb-8 px-4 py-2 text-sm font-medium bg-white/80 rounded-full">
+            <Badge variant="secondary" className="mb-8 px-4 py-2 text-sm font-normal bg-white/80 rounded-full border border-gray-200">
               ✨ Modern Role Management Platform
             </Badge>
             
-            <h1 className="text-6xl md:text-7xl font-extrabold text-navy mb-8 leading-tight">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-navy mb-8 leading-tight">
               Store Rating System
             </h1>
             
-            <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg md:text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed font-normal">
               Manage users, roles, and store ratings with a simple interface.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
+            <div className="flex flex-col sm:flex-row gap-8 justify-center items-center mb-16">
               <Button 
                 size="lg" 
-                className="btn-cta px-12 py-4 text-xl"
+                className="bg-purple-pink-gradient text-white font-bold rounded-full px-12 py-4 text-xl shadow-cta hover:opacity-90 transition"
                 onClick={() => navigate('/signup')}
               >
                 Get Started
@@ -111,32 +155,19 @@ const LandingPage = () => {
               <Button 
                 variant="outline" 
                 size="lg" 
-                className="px-12 py-4 text-xl font-bold border-2 border-navy text-navy hover:bg-navy hover:text-white rounded-full transition"
+                className="px-12 py-4 text-xl font-bold border-2 border-navy text-navy hover:bg-navy hover:text-white rounded-full transition shadow-sm"
                 onClick={() => navigate('/login')}
               >
                 View Demo
               </Button>
             </div>
 
-            <div className="flex items-center justify-center space-x-12 text-sm text-gray-500">
-              <div className="flex items-center space-x-2">
-                <CheckCircle2 className="h-5 w-5 text-green-500" />
-                <span>No credit card required</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <CheckCircle2 className="h-5 w-5 text-green-500" />
-                <span>14-day free trial</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <CheckCircle2 className="h-5 w-5 text-green-500" />
-                <span>Cancel anytime</span>
-              </div>
-            </div>
+            {/*  */}
           </div>
         </div>
 
         {/* Stats Section */}
-        <div className="bg-white/80 backdrop-blur-sm border-t border-gray-100 mt-16">
+        {/* <div className="bg-white/80 backdrop-blur-sm border-t border-gray-100 mt-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
               {stats.map((stat, index) => (
@@ -147,17 +178,17 @@ const LandingPage = () => {
               ))}
             </div>
           </div>
-        </div>
+        </div> */}
       </section>
 
       {/* Features Section */}
       <section id="features" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-navy mb-6">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-navy mb-6">
               Everything you need to succeed
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto font-normal">
               Powerful features designed to streamline your workflow and boost productivity
             </p>
           </div>
@@ -174,7 +205,7 @@ const LandingPage = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="text-center">
-                  <CardDescription className="text-gray-600 leading-relaxed text-base">
+                  <CardDescription className="text-gray-600 leading-relaxed text-base font-normal">
                     {feature.description}
                   </CardDescription>
                 </CardContent>
@@ -187,13 +218,13 @@ const LandingPage = () => {
       {/* CTA Section */}
       <section className="py-20 bg-purple-pink-gradient">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-8">
             Ready to transform your team's workflow?
           </h2>
-          <p className="text-xl text-white/90 mb-12 max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl text-white/90 mb-12 max-w-2xl mx-auto font-normal">
             Join thousands of organizations that trust RoleApp to manage their teams effectively.
           </p>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+          <div className="flex flex-col sm:flex-row gap-8 justify-center">
             <Button 
               size="lg" 
               className="bg-white text-navy font-bold rounded-full px-12 py-4 text-xl shadow-lg hover:bg-gray-50 transition"
@@ -205,7 +236,7 @@ const LandingPage = () => {
             <Button 
               size="lg" 
               variant="outline"
-              className="border-2 border-white text-white font-bold rounded-full px-12 py-4 text-xl hover:bg-white hover:text-navy transition"
+              className="border-2 border-white text-white font-bold rounded-full px-12 py-4 text-xl hover:bg-white hover:text-navy transition shadow-sm"
               onClick={() => navigate('/login')}
             >
               Contact Sales
