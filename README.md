@@ -1,73 +1,203 @@
-# Welcome to your Lovable project
+# Store Rating App - Full Stack Web Application
 
-## Project info
+A comprehensive full-stack web application for store ratings with role-based access control (RBAC). Users can rate stores, store owners can view their ratings, and administrators can manage the entire platform.
 
-**URL**: https://lovable.dev/projects/c8ab92a6-a0a7-49d7-9840-e20beb40d217
+## 🎯 Project Overview
 
-## How can I edit this code?
+Store Rating App is a modern web application built with React, TypeScript, and Express.js that enables:
+- **Normal Users**: Browse stores, search, and submit ratings (1-5 stars)
+- **Store Owners**: View ratings received and analytics for their stores
+- **System Administrators**: Manage users, stores, and view platform analytics
 
-There are several ways of editing your application.
+## ✅ Requirements Satisfaction
 
-**Use Lovable**
+### User Roles & Permissions
+- ✅ **System Administrator**: Full CRUD operations for users and stores
+- ✅ **Normal User**: Registration, store browsing, rating submission
+- ✅ **Store Owner**: Dashboard with ratings analytics
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/c8ab92a6-a0a7-49d7-9840-e20beb40d217) and start prompting.
+### Core Functionalities
+- ✅ **Authentication**: JWT-based login system for all user types
+- ✅ **User Registration**: Normal users can sign up with validation
+- ✅ **Store Management**: Add, view, and manage stores
+- ✅ **Rating System**: 1-5 star ratings with modification capability
+- ✅ **Search & Filtering**: Store search by name/address, admin filters
+- ✅ **Dashboard Analytics**: Real-time statistics and data visualization
 
-Changes made via Lovable will be committed automatically to this repo.
+### Form Validations
+- ✅ **Name**: 20-60 characters
+- ✅ **Email**: Standard email validation
+- ✅ **Password**: 8-16 characters, uppercase + special character
+- ✅ **Address**: Max 400 characters
+- ✅ **Rating**: 1-5 integer validation
 
-**Use your preferred IDE**
+## 🛠 Tech Stack
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Frontend
+- **React 18** with TypeScript
+- **Vite** for fast development and building
+- **Tailwind CSS** for styling
+- **shadcn/ui** for UI components
+- **React Router** for navigation
+- **Axios** for API communication
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Backend
+- **Express.js** with TypeScript
+- **PostgreSQL** database
+- **Prisma** ORM for database operations
+- **JWT** for authentication
+- **bcrypt** for password hashing
+- **CORS** enabled for cross-origin requests
 
-Follow these steps:
+## 🚀 Quick Start
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### Prerequisites
+- Node.js (v18 or higher)
+- npm or yarn
+- PostgreSQL database
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+### Installation & Setup
 
-# Step 3: Install the necessary dependencies.
-npm i
+1. **Clone the repository**
+   ```bash
+   git clone <your-repo-url>
+   cd store-rating-app
+   ```
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+2. **Install dependencies**
+   ```bash
+   # Install frontend dependencies
+   npm install
+   
+   # Install backend dependencies
+   cd backend
+   npm install
+   cd ..
+   ```
+
+3. **Environment Configuration**
+
+   Create `.env` file in the root directory:
+   ```env
+   VITE_API_BASE_URL=http://localhost:8002/api
+   ```
+
+   Create `backend/.env` file:
+   ```env
+   DATABASE_URL="postgresql://username:password@localhost:5432/store_rating_db"
+   JWT_SECRET="your-super-secret-jwt-key-here"
+   PORT=8002
+   NODE_ENV=development
+   BCRYPT_ROUNDS=12
+   FRONTEND_URL=http://localhost:3000
+   ```
+
+4. **Database Setup**
+   ```bash
+   # Navigate to backend directory
+   cd backend
+   
+   # Run database migrations
+   npx prisma migrate dev
+   
+   # Generate Prisma client
+   npx prisma generate
+   ```
+
+5. **Start the application**
+   ```bash
+   # Terminal 1: Start backend server
+   cd backend
+   npm run dev
+   
+   # Terminal 2: Start frontend development server
+   npm run dev
+   ```
+
+6. **Access the application**
+   - Frontend: http://localhost:3000
+   - Backend API: http://localhost:8002
+
+## 📁 Project Structure
+
+```
+store-rating-app/
+├── src/                    # Frontend source code
+│   ├── components/         # Reusable UI components
+│   ├── pages/             # Page components
+│   ├── services/          # API services
+│   └── utils/             # Utility functions
+├── backend/               # Backend source code
+│   ├── src/
+│   │   ├── controllers/   # Route controllers
+│   │   ├── middleware/    # Express middleware
+│   │   ├── routes/        # API routes
+│   │   └── services/      # Business logic
+│   └── prisma/            # Database schema and migrations
+└── public/                # Static assets
 ```
 
-**Edit a file directly in GitHub**
+## 🔐 Authentication & Authorization
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### User Roles
+1. **System Administrator**: Manage all users and stores, view platform analytics
+2. **Normal User**: Register, login, browse stores, submit ratings
+3. **Store Owner**: View store analytics and ratings dashboard
 
-**Use GitHub Codespaces**
+### Security Features
+- JWT token-based authentication
+- Password hashing with bcrypt
+- Role-based route protection
+- Input validation and sanitization
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 🎨 UI/UX Features
 
-## What technologies are used for this project?
+- Clean, minimalist interface
+- Responsive design for all devices
+- Intuitive navigation with sidebar
+- Real-time search and filtering
+- Loading states and error handling
 
-This project is built with:
+## 📊 Database Schema
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### Core Tables
+- **Users**: Authentication and user management
+- **Stores**: Store information and ownership
+- **Ratings**: User ratings with constraints (one rating per user per store)
 
-## How can I deploy this project?
+## 🔧 Development Commands
 
-Simply open [Lovable](https://lovable.dev/projects/c8ab92a6-a0a7-49d7-9840-e20beb40d217) and click on Share -> Publish.
+### Frontend
+```bash
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run preview      # Preview production build
+npm run lint         # Run ESLint
+```
 
-## Can I connect a custom domain to my Lovable project?
+### Backend
+```bash
+cd backend
+npm run dev          # Start development server
+npm run build        # Build for production
+npm start            # Start production server
+npx prisma migrate dev  # Run database migrations
+```
 
-Yes, you can!
+## 🚀 Deployment
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+### Frontend
+```bash
+npm run build
+```
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+### Backend
+```bash
+cd backend
+npm run build
+npm start
+```
+
+---
+
+**Built with ❤️ using React, TypeScript, and Express.js**

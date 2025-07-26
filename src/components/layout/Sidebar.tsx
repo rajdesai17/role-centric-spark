@@ -143,7 +143,7 @@ export const Sidebar: React.FC = () => {
                              <div className="w-8 h-8 bg-slate-900 rounded-lg flex items-center justify-center">
                  <span className="text-white font-bold text-sm">R</span>
                </div>
-              <span className="text-lg font-bold text-navy">RoleApp</span>
+              <span className="text-lg font-bold text-navy">Store Rating App</span>
             </div>
           )}
           <Button

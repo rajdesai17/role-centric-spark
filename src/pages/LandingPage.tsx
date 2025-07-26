@@ -79,7 +79,7 @@ const LandingPage = () => {
                     <span className="text-white font-bold text-lg">R</span>
                   </div>
                   <span className="text-2xl font-bold text-purple-700">
-                    RoleApp
+                    Store Rating App
                   </span>
                 </div>
 
@@ -228,14 +228,14 @@ const LandingPage = () => {
               <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-lg">
                 <span className="text-slate-900 font-bold text-lg">R</span>
               </div>
-              <span className="text-2xl font-bold text-white">RoleApp</span>
+                              <span className="text-2xl font-bold text-white">Store Rating App</span>
             </div>
             <p className="text-slate-400 text-lg mb-8">
               Modern role management for modern teams.
             </p>
             <div className="border-t border-slate-800 pt-6">
               <p className="text-slate-400 text-sm">
-                &copy; {new Date().getFullYear()} RoleApp. All rights reserved.
+                &copy; {new Date().getFullYear()} Store Rating App. All rights reserved.
               </p>
             </div>
           </div>

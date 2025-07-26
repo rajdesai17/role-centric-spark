@@ -33,7 +33,7 @@ export const Navbar: React.FC = () => {
                 <span className="text-white font-bold text-sm">R</span>
               </div>
               <span className="text-xl font-bold text-navy">
-                RoleApp
+                Store Rating App
               </span>
             </div>
             <div className="hidden md:flex items-center space-x-2 px-4 py-2 bg-gray-50 rounded-full">
