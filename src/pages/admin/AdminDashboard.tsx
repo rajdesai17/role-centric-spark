@@ -3,7 +3,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { StatsCard } from "@/components/layout/StatsCard";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Users, Store, Star, Plus } from "lucide-react";
+import { Users, Store, Star, Plus, BarChart3 } from "lucide-react";
 import { apiService } from "@/services/api";
 import { toast } from "sonner";
 import { UserManagement } from "./UserManagement";
@@ -43,25 +43,53 @@ export const AdminDashboard: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background to-muted">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30">
       <Navbar />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Header Section */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground mb-2">
-            System Administration
-          </h1>
-          <p className="text-muted-foreground">
-            Manage users, stores, and monitor platform activity
-          </p>
+          <div className="flex items-center space-x-3 mb-4">
+            <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
+              <BarChart3 className="h-6 w-6 text-white" />
+            </div>
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900">
+                System Administration
+              </h1>
+              <p className="text-gray-600 mt-1">
+                Manage users, stores, and monitor platform activity
+              </p>
+            </div>
+          </div>
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="users">User Management</TabsTrigger>
-            <TabsTrigger value="stores">Store Management</TabsTrigger>
-            <TabsTrigger value="forms">Add New</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-4 bg-white/80 backdrop-blur-sm border border-gray-200 shadow-sm">
+            <TabsTrigger 
+              value="overview" 
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-purple-600 data-[state=active]:text-white transition-all duration-300"
+            >
+              Overview
+            </TabsTrigger>
+            <TabsTrigger 
+              value="users"
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-purple-600 data-[state=active]:text-white transition-all duration-300"
+            >
+              User Management
+            </TabsTrigger>
+            <TabsTrigger 
+              value="stores"
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-purple-600 data-[state=active]:text-white transition-all duration-300"
+            >
+              Store Management
+            </TabsTrigger>
+            <TabsTrigger 
+              value="forms"
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-purple-600 data-[state=active]:text-white transition-all duration-300"
+            >
+              Add New
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="overview" className="space-y-6">
@@ -97,12 +125,13 @@ export const AdminDashboard: React.FC = () => {
 
           <TabsContent value="forms" className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div>
+              <div className="bg-white/80 backdrop-blur-sm rounded-lg border border-gray-200 p-6 shadow-sm">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold">Add New User</h3>
+                  <h3 className="text-lg font-semibold text-gray-900">Add New User</h3>
                   <Button
                     onClick={() => setShowAddUser(!showAddUser)}
                     variant={showAddUser ? "secondary" : "default"}
+                    className={showAddUser ? "bg-gray-100 text-gray-700 hover:bg-gray-200" : "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"}
                   >
                     <Plus className="h-4 w-4 mr-2" />
                     {showAddUser ? "Hide Form" : "Show Form"}
@@ -111,12 +140,13 @@ export const AdminDashboard: React.FC = () => {
                 {showAddUser && <AddUserForm />}
               </div>
 
-              <div>
+              <div className="bg-white/80 backdrop-blur-sm rounded-lg border border-gray-200 p-6 shadow-sm">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold">Add New Store</h3>
+                  <h3 className="text-lg font-semibold text-gray-900">Add New Store</h3>
                   <Button
                     onClick={() => setShowAddStore(!showAddStore)}
                     variant={showAddStore ? "secondary" : "default"}
+                    className={showAddStore ? "bg-gray-100 text-gray-700 hover:bg-gray-200" : "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"}
                   >
                     <Plus className="h-4 w-4 mr-2" />
                     {showAddStore ? "Hide Form" : "Show Form"}
