@@ -1,18 +1,53 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Search, ArrowUpDown, Store } from "lucide-react";
-import { mockStores } from "@/utils/mockData";
+import { apiService } from "@/services/api";
+import { toast } from "sonner";
 
 type SortField = 'name' | 'email' | 'address' | 'avgRating';
 type SortDirection = 'asc' | 'desc';
+
+interface Store {
+  id: string;
+  name: string;
+  email: string;
+  address: string;
+  ownerId: string;
+  createdAt: string;
+  updatedAt: string;
+}
 
 export const StoreManagement: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortField, setSortField] = useState<SortField>('name');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
+  const [stores, setStores] = useState<Store[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    loadStores();
+  }, [searchTerm]);
+
+  const loadStores = async () => {
+    try {
+      setIsLoading(true);
+      const response = await apiService.getStores(searchTerm || undefined);
+      if (response.data) {
+        setStores(response.data.stores);
+        setTotal(response.data.total);
+      } else {
+        toast.error("Failed to load stores");
+      }
+    } catch (error) {
+      toast.error("Failed to load stores");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleSort = (field: SortField) => {
     if (sortField === field) {
@@ -23,14 +58,10 @@ export const StoreManagement: React.FC = () => {
     }
   };
 
-  const filteredAndSortedStores = useMemo(() => {
-    let filtered = mockStores.filter(store =>
-      store.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      store.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      store.address.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-
-    filtered.sort((a, b) => {
+  const sortedStores = useMemo(() => {
+    const sorted = [...stores];
+    
+    sorted.sort((a, b) => {
       let aVal = a[sortField];
       let bVal = b[sortField];
       
@@ -42,8 +73,8 @@ export const StoreManagement: React.FC = () => {
       return 0;
     });
 
-    return filtered;
-  }, [searchTerm, sortField, sortDirection]);
+    return sorted;
+  }, [stores, sortField, sortDirection]);
 
   return (
     <Card className="shadow-soft">
@@ -93,29 +124,38 @@ export const StoreManagement: React.FC = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredAndSortedStores.map((store) => (
-                <TableRow key={store.id}>
-                  <TableCell className="font-medium">{store.name}</TableCell>
-                  <TableCell>{store.email}</TableCell>
-                  <TableCell className="max-w-xs truncate">{store.address}</TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-1">
-                      <span className="text-sm font-medium">{store.avgRating.toFixed(1)}</span>
-                      <span className="text-xs text-muted-foreground">⭐</span>
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <span className="text-sm text-muted-foreground">
-                      {store.totalRatings} reviews
-                    </span>
+              {isLoading ? (
+                <TableRow>
+                  <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
+                    Loading stores...
                   </TableCell>
                 </TableRow>
-              ))}
+              ) : sortedStores.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
+                    No stores found
+                  </TableCell>
+                </TableRow>
+              ) : (
+                sortedStores.map((store) => (
+                  <TableRow key={store.id}>
+                    <TableCell className="font-medium">{store.name}</TableCell>
+                    <TableCell>{store.email}</TableCell>
+                    <TableCell className="max-w-xs truncate">{store.address}</TableCell>
+                    <TableCell>
+                      <span className="text-muted-foreground">-</span>
+                    </TableCell>
+                    <TableCell>
+                      <span className="text-muted-foreground">-</span>
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
             </TableBody>
           </Table>
         </div>
         <div className="mt-4 text-sm text-muted-foreground">
-          Showing {filteredAndSortedStores.length} of {mockStores.length} stores
+          Showing {sortedStores.length} of {total} stores
         </div>
       </CardContent>
     </Card>

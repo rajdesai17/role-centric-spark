@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
-  allowedRoles?: ('admin' | 'user' | 'store_owner')[];
+  allowedRoles?: ('SYSTEM_ADMIN' | 'NORMAL_USER' | 'STORE_OWNER')[];
 }
 
 export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ 

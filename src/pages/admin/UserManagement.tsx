@@ -1,19 +1,54 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Search, ArrowUpDown } from "lucide-react";
-import { mockUsers } from "@/utils/mockData";
+import { apiService } from "@/services/api";
+import { toast } from "sonner";
 
 type SortField = 'name' | 'email' | 'address' | 'role';
 type SortDirection = 'asc' | 'desc';
+
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  address?: string;
+  role: 'SYSTEM_ADMIN' | 'NORMAL_USER' | 'STORE_OWNER';
+  createdAt: string;
+  updatedAt: string;
+}
 
 export const UserManagement: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortField, setSortField] = useState<SortField>('name');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
+  const [users, setUsers] = useState<User[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    loadUsers();
+  }, [searchTerm]);
+
+  const loadUsers = async () => {
+    try {
+      setIsLoading(true);
+      const response = await apiService.getUsers(searchTerm || undefined);
+      if (response.data) {
+        setUsers(response.data.users);
+        setTotal(response.data.total);
+      } else {
+        toast.error("Failed to load users");
+      }
+    } catch (error) {
+      toast.error("Failed to load users");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleSort = (field: SortField) => {
     if (sortField === field) {
@@ -24,14 +59,10 @@ export const UserManagement: React.FC = () => {
     }
   };
 
-  const filteredAndSortedUsers = useMemo(() => {
-    let filtered = mockUsers.filter(user =>
-      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.address.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-
-    filtered.sort((a, b) => {
+  const sortedUsers = useMemo(() => {
+    const sorted = [...users];
+    
+    sorted.sort((a, b) => {
       let aVal = a[sortField];
       let bVal = b[sortField];
       
@@ -43,23 +74,23 @@ export const UserManagement: React.FC = () => {
       return 0;
     });
 
-    return filtered;
-  }, [searchTerm, sortField, sortDirection]);
+    return sorted;
+  }, [users, sortField, sortDirection]);
 
   const getRoleBadgeVariant = (role: string) => {
     switch (role) {
-      case 'admin': return 'destructive';
-      case 'store_owner': return 'default';
-      case 'user': return 'secondary';
+      case 'SYSTEM_ADMIN': return 'destructive';
+      case 'STORE_OWNER': return 'default';
+      case 'NORMAL_USER': return 'secondary';
       default: return 'secondary';
     }
   };
 
   const getRoleLabel = (role: string) => {
     switch (role) {
-      case 'admin': return 'Administrator';
-      case 'store_owner': return 'Store Owner';
-      case 'user': return 'User';
+      case 'SYSTEM_ADMIN': return 'Administrator';
+      case 'STORE_OWNER': return 'Store Owner';
+      case 'NORMAL_USER': return 'User';
       default: return role;
     }
   };
@@ -112,33 +143,40 @@ export const UserManagement: React.FC = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredAndSortedUsers.map((user) => (
-                <TableRow key={user.id}>
-                  <TableCell className="font-medium">{user.name}</TableCell>
-                  <TableCell>{user.email}</TableCell>
-                  <TableCell className="max-w-xs truncate">{user.address}</TableCell>
-                  <TableCell>
-                    <Badge variant={getRoleBadgeVariant(user.role)}>
-                      {getRoleLabel(user.role)}
-                    </Badge>
-                  </TableCell>
-                  <TableCell>
-                    {user.role === 'store_owner' && user.avgRating ? (
-                      <div className="flex items-center gap-1">
-                        <span className="text-sm font-medium">{user.avgRating.toFixed(1)}</span>
-                        <span className="text-xs text-muted-foreground">⭐</span>
-                      </div>
-                    ) : (
-                      <span className="text-muted-foreground">-</span>
-                    )}
+              {isLoading ? (
+                <TableRow>
+                  <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
+                    Loading users...
                   </TableCell>
                 </TableRow>
-              ))}
+              ) : sortedUsers.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
+                    No users found
+                  </TableCell>
+                </TableRow>
+              ) : (
+                sortedUsers.map((user) => (
+                  <TableRow key={user.id}>
+                    <TableCell className="font-medium">{user.name}</TableCell>
+                    <TableCell>{user.email}</TableCell>
+                    <TableCell className="max-w-xs truncate">{user.address || '-'}</TableCell>
+                    <TableCell>
+                      <Badge variant={getRoleBadgeVariant(user.role)}>
+                        {getRoleLabel(user.role)}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      <span className="text-muted-foreground">-</span>
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
             </TableBody>
           </Table>
         </div>
         <div className="mt-4 text-sm text-muted-foreground">
-          Showing {filteredAndSortedUsers.length} of {mockUsers.length} users
+          Showing {sortedUsers.length} of {total} users
         </div>
       </CardContent>
     </Card>

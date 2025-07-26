@@ -21,11 +21,11 @@ const DashboardRouter = () => {
   if (!user) return <Navigate to="/login" replace />;
   
   switch (user.role) {
-    case 'admin':
+    case 'SYSTEM_ADMIN':
       return <AdminDashboard />;
-    case 'store_owner':
+    case 'STORE_OWNER':
       return <StoreOwnerDashboard />;
-    case 'user':
+    case 'NORMAL_USER':
       return <UserDashboard />;
     default:
       return <Navigate to="/login" replace />;
@@ -54,7 +54,7 @@ const App = () => (
             <Route 
               path="/update-password" 
               element={
-                <ProtectedRoute allowedRoles={['user', 'store_owner']}>
+                <ProtectedRoute allowedRoles={['NORMAL_USER', 'STORE_OWNER']}>
                   <UpdatePassword />
                 </ProtectedRoute>
               } 

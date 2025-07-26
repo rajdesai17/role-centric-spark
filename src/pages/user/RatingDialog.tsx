@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Star } from "lucide-react";
-import { mockStores, mockRatings } from "@/utils/mockData";
+import { apiService } from "@/services/api";
 import { useAuth } from "@/components/auth/AuthContext";
 import { toast } from "sonner";
 
@@ -11,20 +11,50 @@ interface RatingDialogProps {
   onClose: () => void;
   storeId: string | null;
   currentRating?: number;
+  onRatingSubmitted?: () => void;
+}
+
+interface Store {
+  id: string;
+  name: string;
+  email: string;
+  address: string;
+  ownerId: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export const RatingDialog: React.FC<RatingDialogProps> = ({
   isOpen,
   onClose,
   storeId,
-  currentRating
+  currentRating,
+  onRatingSubmitted
 }) => {
   const { user } = useAuth();
   const [rating, setRating] = useState(currentRating || 0);
   const [hoveredRating, setHoveredRating] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [store, setStore] = useState<Store | null>(null);
 
-  const store = storeId ? mockStores.find(s => s.id === storeId) : null;
+  useEffect(() => {
+    if (storeId && isOpen) {
+      loadStoreDetails();
+    }
+  }, [storeId, isOpen]);
+
+  const loadStoreDetails = async () => {
+    if (!storeId) return;
+    try {
+      const response = await apiService.getUserStores();
+      if (response.data) {
+        const foundStore = response.data.stores.find(s => s.id === storeId);
+        setStore(foundStore || null);
+      }
+    } catch (error) {
+      console.error('Failed to load store details:', error);
+    }
+  };
 
   useEffect(() => {
     if (isOpen) {
@@ -42,41 +72,34 @@ export const RatingDialog: React.FC<RatingDialogProps> = ({
     setIsLoading(true);
 
     try {
-      const existingRatingIndex = mockRatings.findIndex(
-        r => r.storeId === storeId && r.userId === user.id
-      );
-
-      if (existingRatingIndex !== -1) {
-        // Update existing rating
-        mockRatings[existingRatingIndex] = {
-          ...mockRatings[existingRatingIndex],
-          rating,
-          createdAt: new Date().toISOString().split('T')[0]
-        };
-        toast.success("Rating updated successfully!");
-      } else {
-        // Add new rating
-        const newRating = {
-          id: Date.now().toString(),
-          userId: user.id,
+      if (currentRating) {
+        // This would be for updating an existing rating
+        // For now, we'll create a new rating since the API doesn't have update endpoint
+        const response = await apiService.createRating({
           storeId,
-          rating,
-          createdAt: new Date().toISOString().split('T')[0]
-        };
-        mockRatings.push(newRating);
-        toast.success("Rating submitted successfully!");
+          rating
+        });
+        
+        if (response.data) {
+          toast.success("Rating updated successfully!");
+        } else {
+          toast.error(response.error || "Failed to update rating");
+        }
+      } else {
+        // Create new rating
+        const response = await apiService.createRating({
+          storeId,
+          rating
+        });
+        
+        if (response.data) {
+          toast.success("Rating submitted successfully!");
+        } else {
+          toast.error(response.error || "Failed to submit rating");
+        }
       }
 
-      // Update store's average rating
-      const storeRatings = mockRatings.filter(r => r.storeId === storeId);
-      const avgRating = storeRatings.reduce((sum, r) => sum + r.rating, 0) / storeRatings.length;
-      
-      const storeIndex = mockStores.findIndex(s => s.id === storeId);
-      if (storeIndex !== -1) {
-        mockStores[storeIndex].avgRating = avgRating;
-        mockStores[storeIndex].totalRatings = storeRatings.length;
-      }
-
+      onRatingSubmitted?.();
       onClose();
     } catch (error) {
       toast.error("Failed to submit rating");

@@ -2,6 +2,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
+import { useState, useEffect } from "react";
 
 interface FormFieldProps {
   label: string;
@@ -14,6 +15,8 @@ interface FormFieldProps {
   required?: boolean;
   multiline?: boolean;
   className?: string;
+  validateOnChange?: boolean;
+  validator?: (value: string) => { isValid: boolean; errors: string[] };
 }
 
 export const FormField: React.FC<FormFieldProps> = ({
@@ -26,9 +29,25 @@ export const FormField: React.FC<FormFieldProps> = ({
   placeholder,
   required = false,
   multiline = false,
-  className
+  className,
+  validateOnChange = false,
+  validator
 }) => {
+  const [localError, setLocalError] = useState<string>("");
   const InputComponent = multiline ? Textarea : Input;
+  
+  useEffect(() => {
+    if (validateOnChange && validator) {
+      const validation = validator(value);
+      if (!validation.isValid) {
+        setLocalError(validation.errors.join(', '));
+      } else {
+        setLocalError("");
+      }
+    }
+  }, [value, validateOnChange, validator]);
+
+  const displayError = error || localError;
   
   return (
     <div className={cn("space-y-2", className)}>
@@ -43,11 +62,11 @@ export const FormField: React.FC<FormFieldProps> = ({
         placeholder={placeholder}
         className={cn(
           "w-full transition-colors",
-          error && "border-destructive focus:ring-destructive"
+          displayError && "border-destructive focus:ring-destructive"
         )}
       />
-      {error && (
-        <p className="text-sm text-destructive">{error}</p>
+      {displayError && (
+        <p className="text-sm text-destructive">{displayError}</p>
       )}
     </div>
   );

@@ -1,44 +1,70 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { FormField } from "@/components/ui/FormField";
-import { validateEmail, validateAddress } from "@/utils/validation";
-import { mockStores } from "@/utils/mockData";
+import { validateEmail, validateAddress, validateStoreName } from "@/utils/validation";
+import { apiService } from "@/services/api";
 import { toast } from "sonner";
 import { Store } from "lucide-react";
+
+interface StoreOwner {
+  id: string;
+  name: string;
+  email: string;
+}
 
 export const AddStoreForm: React.FC = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    address: ""
+    address: "",
+    ownerId: ""
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(false);
+  const [storeOwners, setStoreOwners] = useState<StoreOwner[]>([]);
+  const [loadingOwners, setLoadingOwners] = useState(true);
+
+  useEffect(() => {
+    loadStoreOwners();
+  }, []);
+
+  const loadStoreOwners = async () => {
+    try {
+      const response = await apiService.getUsers(undefined, 'STORE_OWNER');
+      if (response.data) {
+        setStoreOwners(response.data.users);
+      } else {
+        toast.error("Failed to load store owners");
+      }
+    } catch (error) {
+      toast.error("Failed to load store owners");
+    } finally {
+      setLoadingOwners(false);
+    }
+  };
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
 
-    if (!formData.name || formData.name.length < 2) {
-      newErrors.name = "Store name must be at least 2 characters";
+    const nameValidation = validateStoreName(formData.name);
+    if (!nameValidation.isValid) {
+      newErrors.name = nameValidation.errors.join(', ');
     }
 
     const emailValidation = validateEmail(formData.email);
     if (!emailValidation.isValid) {
-      newErrors.email = emailValidation.errors[0];
-    }
-
-    if (mockStores.some(store => store.email === formData.email)) {
-      newErrors.email = "Email already exists";
+      newErrors.email = emailValidation.errors.join(', ');
     }
 
     const addressValidation = validateAddress(formData.address);
     if (!addressValidation.isValid) {
-      newErrors.address = addressValidation.errors[0];
+      newErrors.address = addressValidation.errors.join(', ');
     }
 
-    if (!formData.address) {
-      newErrors.address = "Address is required";
+    if (!formData.ownerId) {
+      newErrors.ownerId = "Please select a store owner";
     }
 
     setErrors(newErrors);
@@ -56,19 +82,20 @@ export const AddStoreForm: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const newStore = {
-        id: Date.now().toString(),
-        ...formData,
-        ownerId: Date.now().toString() + "_owner",
-        avgRating: 0,
-        totalRatings: 0
-      };
-      
-      mockStores.push(newStore);
-      
-      toast.success("Store added successfully!");
-      setFormData({ name: "", email: "", address: "" });
-      setErrors({});
+      const response = await apiService.createStore({
+        name: formData.name,
+        email: formData.email,
+        address: formData.address,
+        ownerId: formData.ownerId
+      });
+
+      if (response.data) {
+        toast.success("Store added successfully!");
+        setFormData({ name: "", email: "", address: "", ownerId: "" });
+        setErrors({});
+      } else {
+        toast.error(response.error || "Failed to add store");
+      }
     } catch (error) {
       toast.error("Failed to add store");
     } finally {
@@ -92,6 +119,16 @@ export const AddStoreForm: React.FC = () => {
         </CardTitle>
       </CardHeader>
       <CardContent>
+        <div className="mb-4 p-3 bg-muted rounded-lg">
+          <h4 className="text-sm font-medium mb-2">Requirements:</h4>
+          <ul className="text-xs text-muted-foreground space-y-1">
+            <li>• Store Name: 1-255 characters</li>
+            <li>• Email: Valid email format</li>
+            <li>• Address: Max 400 characters</li>
+            <li>• Owner: Must select a store owner</li>
+          </ul>
+        </div>
+        
         <form onSubmit={handleSubmit} className="space-y-4">
           <FormField
             label="Store Name"
@@ -101,6 +138,8 @@ export const AddStoreForm: React.FC = () => {
             placeholder="Enter store name"
             error={errors.name}
             required
+            validateOnChange={true}
+            validator={validateStoreName}
           />
           
           <FormField
@@ -112,6 +151,8 @@ export const AddStoreForm: React.FC = () => {
             placeholder="Enter store email address"
             error={errors.email}
             required
+            validateOnChange={true}
+            validator={validateEmail}
           />
           
           <FormField
@@ -123,12 +164,39 @@ export const AddStoreForm: React.FC = () => {
             error={errors.address}
             multiline
             required
+            validateOnChange={true}
+            validator={validateAddress}
           />
+
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-foreground">
+              Store Owner <span className="text-destructive">*</span>
+            </label>
+            <Select 
+              value={formData.ownerId} 
+              onValueChange={(value) => updateField('ownerId', value)}
+              disabled={loadingOwners}
+            >
+              <SelectTrigger className={errors.ownerId ? "border-destructive" : ""}>
+                <SelectValue placeholder={loadingOwners ? "Loading owners..." : "Select store owner"} />
+              </SelectTrigger>
+              <SelectContent>
+                {storeOwners.map((owner) => (
+                  <SelectItem key={owner.id} value={owner.id}>
+                    {owner.name} ({owner.email})
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            {errors.ownerId && (
+              <p className="text-sm text-destructive">{errors.ownerId}</p>
+            )}
+          </div>
 
           <Button
             type="submit"
             className="w-full"
-            disabled={isLoading}
+            disabled={isLoading || loadingOwners}
           >
             {isLoading ? "Adding Store..." : "Add Store"}
           </Button>

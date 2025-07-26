@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { StatsCard } from "@/components/layout/StatsCard";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Users, Store, Star, Plus } from "lucide-react";
-import { mockUsers, mockStores, mockRatings } from "@/utils/mockData";
+import { apiService } from "@/services/api";
+import { toast } from "sonner";
 import { UserManagement } from "./UserManagement";
 import { StoreManagement } from "./StoreManagement";
 import { AddUserForm } from "./AddUserForm";
@@ -14,10 +15,32 @@ export const AdminDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState("overview");
   const [showAddUser, setShowAddUser] = useState(false);
   const [showAddStore, setShowAddStore] = useState(false);
+  const [dashboardData, setDashboardData] = useState({
+    totalUsers: 0,
+    totalStores: 0,
+    totalRatings: 0
+  });
+  const [isLoading, setIsLoading] = useState(true);
 
-  const totalUsers = mockUsers.length;
-  const totalStores = mockStores.length;
-  const totalRatings = mockRatings.length;
+  useEffect(() => {
+    loadDashboardData();
+  }, []);
+
+  const loadDashboardData = async () => {
+    try {
+      setIsLoading(true);
+      const response = await apiService.getDashboard();
+      if (response.data) {
+        setDashboardData(response.data);
+      } else {
+        toast.error("Failed to load dashboard data");
+      }
+    } catch (error) {
+      toast.error("Failed to load dashboard data");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-muted">
@@ -45,19 +68,19 @@ export const AdminDashboard: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <StatsCard
                 title="Total Users"
-                value={totalUsers}
+                value={isLoading ? 0 : dashboardData.totalUsers}
                 icon={Users}
                 description="Active platform users"
               />
               <StatsCard
                 title="Total Stores"
-                value={totalStores}
+                value={isLoading ? 0 : dashboardData.totalStores}
                 icon={Store}
                 description="Registered stores"
               />
               <StatsCard
                 title="Total Ratings"
-                value={totalRatings}
+                value={isLoading ? 0 : dashboardData.totalRatings}
                 icon={Star}
                 description="Customer reviews"
               />

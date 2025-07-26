@@ -25,8 +25,8 @@ export const Navbar: React.FC = () => {
             <div className="hidden md:flex items-center space-x-2">
               <User className="h-4 w-4 text-muted-foreground" />
               <span className="text-sm text-muted-foreground">
-                {user.role === 'admin' ? 'System Administrator' : 
-                 user.role === 'store_owner' ? 'Store Owner' : 'User'}
+                {user.role === 'SYSTEM_ADMIN' ? 'System Administrator' : 
+                 user.role === 'STORE_OWNER' ? 'Store Owner' : 'User'}
               </span>
             </div>
           </div>
@@ -35,7 +35,7 @@ export const Navbar: React.FC = () => {
             <span className="hidden sm:block text-sm font-medium text-foreground">
               {user.name}
             </span>
-            {(user.role === 'user' || user.role === 'store_owner') && (
+            {(user.role === 'NORMAL_USER' || user.role === 'STORE_OWNER') && (
               <Button
                 variant="outline"
                 size="sm"

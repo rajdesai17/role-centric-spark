@@ -24,22 +24,22 @@ export const Signup: React.FC = () => {
 
     const nameValidation = validateName(formData.name);
     if (!nameValidation.isValid) {
-      newErrors.name = nameValidation.errors[0];
+      newErrors.name = nameValidation.errors.join(', ');
     }
 
     const emailValidation = validateEmail(formData.email);
     if (!emailValidation.isValid) {
-      newErrors.email = emailValidation.errors[0];
+      newErrors.email = emailValidation.errors.join(', ');
     }
 
     const addressValidation = validateAddress(formData.address);
     if (!addressValidation.isValid) {
-      newErrors.address = addressValidation.errors[0];
+      newErrors.address = addressValidation.errors.join(', ');
     }
 
     const passwordValidation = validatePassword(formData.password);
     if (!passwordValidation.isValid) {
-      newErrors.password = passwordValidation.errors[0];
+      newErrors.password = passwordValidation.errors.join(', ');
     }
 
     setErrors(newErrors);
@@ -88,6 +88,16 @@ export const Signup: React.FC = () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
+          <div className="mb-4 p-3 bg-muted rounded-lg">
+            <h4 className="text-sm font-medium mb-2">Requirements:</h4>
+            <ul className="text-xs text-muted-foreground space-y-1">
+              <li>• Name: 20-60 characters</li>
+              <li>• Email: Valid email format</li>
+              <li>• Address: Max 400 characters</li>
+              <li>• Password: 8-16 characters, 1 uppercase, 1 special character</li>
+            </ul>
+          </div>
+          
           <form onSubmit={handleSubmit} className="space-y-4">
             <FormField
               label="Full Name"
@@ -97,6 +107,8 @@ export const Signup: React.FC = () => {
               placeholder="Enter your full name (20-60 characters)"
               error={errors.name}
               required
+              validateOnChange={true}
+              validator={validateName}
             />
             
             <FormField
@@ -108,6 +120,8 @@ export const Signup: React.FC = () => {
               placeholder="Enter your email address"
               error={errors.email}
               required
+              validateOnChange={true}
+              validator={validateEmail}
             />
             
             <FormField
@@ -119,6 +133,8 @@ export const Signup: React.FC = () => {
               error={errors.address}
               multiline
               required
+              validateOnChange={true}
+              validator={validateAddress}
             />
             
             <FormField
@@ -130,6 +146,8 @@ export const Signup: React.FC = () => {
               placeholder="8-16 chars, 1 uppercase, 1 special char"
               error={errors.password}
               required
+              validateOnChange={true}
+              validator={validatePassword}
             />
 
             <Button
