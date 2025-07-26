@@ -82,7 +82,7 @@ export const Signup: React.FC = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
+      <div className="w-full max-w-lg">
         {/* Back to Landing Page */}
         <div className="mb-8">
           <Button
@@ -109,10 +109,10 @@ export const Signup: React.FC = () => {
               Join as a new user to explore stores and rate them
             </CardDescription>
           </CardHeader>
-          
+
           <CardContent className="space-y-8">
             {/* Requirements Section */}
-            {/* <div className="p-6 bg-gradient-to-r from-blue/5 to-purple-pink-gradient/5 rounded-2xl border border-blue/10">
+            <div className="p-6 bg-gradient-to-r from-blue/5 to-purple-pink-gradient/5 rounded-2xl border border-blue/10">
               <h4 className="text-base font-bold text-navy mb-4 flex items-center">
                 <CheckCircle2 className="h-5 w-5 mr-3 text-blue" />
                 Account Requirements
@@ -123,8 +123,8 @@ export const Signup: React.FC = () => {
                 <li>• Address: Max 400 characters</li>
                 <li>• Password: 8-16 characters, 1 uppercase, 1 special character</li>
               </ul>
-            </div> */}
-            
+            </div>
+
             <form onSubmit={handleSubmit} className="space-y-6">
               <FormField
                 label="Full Name"
@@ -190,8 +190,8 @@ export const Signup: React.FC = () => {
             <div className="text-center pt-6">
               <p className="text-gray-600">
                 Already have an account?{" "}
-                <Link 
-                  to="/login" 
+                <Link
+                  to="/login"
                   className="text-blue font-bold hover:underline transition-colors"
                 >
                   Sign in

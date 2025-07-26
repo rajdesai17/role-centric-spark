@@ -47,7 +47,7 @@ export const Login: React.FC = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
+      <div className="w-full max-w-lg">
         {/* Back to Landing Page */}
         <div className="mb-8">
           <Button
@@ -74,7 +74,7 @@ export const Login: React.FC = () => {
               Sign in to your account to continue
             </CardDescription>
           </CardHeader>
-          
+
           <CardContent className="space-y-8">
             <form onSubmit={handleSubmit} className="space-y-6">
               <FormField
@@ -155,8 +155,8 @@ export const Login: React.FC = () => {
             <div className="text-center pt-6">
               <p className="text-gray-600">
                 Don't have an account?{" "}
-                <Link 
-                  to="/signup" 
+                <Link
+                  to="/signup"
                   className="text-blue font-bold hover:underline transition-colors"
                 >
                   Sign up
