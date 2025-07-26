@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Star } from "lucide-react";
 import { apiService } from "@/services/api";
 import { useAuth } from "@/components/auth/AuthContext";
-import { toast } from "sonner";
+import { useNotification } from "@/components/ui/notification";
 
 interface RatingDialogProps {
   isOpen: boolean;
@@ -32,6 +32,7 @@ export const RatingDialog: React.FC<RatingDialogProps> = ({
   onRatingSubmitted
 }) => {
   const { user } = useAuth();
+  const { showNotification } = useNotification();
   const [rating, setRating] = useState(currentRating || 0);
   const [hoveredRating, setHoveredRating] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -65,7 +66,7 @@ export const RatingDialog: React.FC<RatingDialogProps> = ({
 
   const handleSubmit = async () => {
     if (!storeId || !user || rating === 0) {
-      toast.error("Please select a rating");
+      showNotification('error', "Please select a rating");
       return;
     }
 
@@ -81,9 +82,9 @@ export const RatingDialog: React.FC<RatingDialogProps> = ({
         });
         
         if (response.data) {
-          toast.success("Rating updated successfully!");
+          showNotification('success', "Rating updated successfully!");
         } else {
-          toast.error(response.error || "Failed to update rating");
+          showNotification('error', response.error || "Failed to update rating");
         }
       } else {
         // Create new rating
@@ -93,16 +94,16 @@ export const RatingDialog: React.FC<RatingDialogProps> = ({
         });
         
         if (response.data) {
-          toast.success("Rating submitted successfully!");
+          showNotification('success', "Rating submitted successfully!");
         } else {
-          toast.error(response.error || "Failed to submit rating");
+          showNotification('error', response.error || "Failed to submit rating");
         }
       }
 
       onRatingSubmitted?.();
       onClose();
     } catch (error) {
-      toast.error("Failed to submit rating");
+      showNotification('error', "Failed to submit rating");
     } finally {
       setIsLoading(false);
     }

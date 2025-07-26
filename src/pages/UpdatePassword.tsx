@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { FormField } from "@/components/ui/FormField";
 import { validatePassword } from "@/utils/validation";
-import { toast } from "sonner";
+import { useNotification } from "@/components/ui/notification";
 import { Navbar } from "@/components/layout/Navbar";
 
 export const UpdatePassword: React.FC = () => {
@@ -17,6 +17,7 @@ export const UpdatePassword: React.FC = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(false);
   const { user, updatePassword } = useAuth();
+  const { showNotification } = useNotification();
   const navigate = useNavigate();
 
   const validateForm = () => {
@@ -47,7 +48,7 @@ export const UpdatePassword: React.FC = () => {
     e.preventDefault();
     
     if (!validateForm()) {
-      toast.error("Please fix the validation errors");
+      showNotification('error', "Please fix the validation errors");
       return;
     }
 
@@ -56,13 +57,13 @@ export const UpdatePassword: React.FC = () => {
     try {
       const success = await updatePassword(passwords.new);
       if (success) {
-        toast.success("Password updated successfully!");
+        showNotification('success', "Password updated successfully!");
         navigate("/dashboard");
       } else {
-        toast.error("Failed to update password");
+        showNotification('error', "Failed to update password");
       }
     } catch (error) {
-      toast.error("Failed to update password");
+      showNotification('error', "Failed to update password");
     } finally {
       setIsLoading(false);
     }

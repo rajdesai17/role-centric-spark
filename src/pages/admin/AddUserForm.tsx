@@ -5,7 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { FormField } from "@/components/ui/FormField";
 import { validateName, validateEmail, validateAddress, validatePassword } from "@/utils/validation";
 import { apiService } from "@/services/api";
-import { toast } from "sonner";
+import { useNotification } from "@/components/ui/notification";
 import { UserPlus } from "lucide-react";
 
 export const AddUserForm: React.FC = () => {
@@ -54,7 +54,7 @@ export const AddUserForm: React.FC = () => {
     e.preventDefault();
     
     if (!validateForm()) {
-      toast.error("Please fix the validation errors");
+      showNotification('error', "Please fix the validation errors");
       return;
     }
 
@@ -70,14 +70,14 @@ export const AddUserForm: React.FC = () => {
       });
 
       if (response.data) {
-        toast.success("User added successfully!");
+        showNotification('success', "User added successfully!");
         setFormData({ name: "", email: "", password: "", address: "", role: "" });
         setErrors({});
       } else {
-        toast.error(response.error || "Failed to add user");
+        showNotification('error', response.error || "Failed to add user");
       }
     } catch (error) {
-      toast.error("Failed to add user");
+      showNotification('error', "Failed to add user");
     } finally {
       setIsLoading(false);
     }

@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Search, MapPin, Star } from "lucide-react";
 import { apiService } from "@/services/api";
-import { toast } from "sonner";
+import { useNotification } from "@/components/ui/notification";
 import { useAuth } from "@/components/auth/AuthContext";
 import { RatingDialog } from "./RatingDialog";
 
@@ -30,6 +30,7 @@ interface UserRating {
 
 export const StoreExplorer: React.FC = () => {
   const { user } = useAuth();
+  const { showNotification } = useNotification();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedStore, setSelectedStore] = useState<string | null>(null);
   const [showRatingDialog, setShowRatingDialog] = useState(false);
@@ -47,10 +48,10 @@ export const StoreExplorer: React.FC = () => {
       if (response.data) {
         setStores(response.data.stores);
       } else {
-        toast.error("Failed to load stores");
+        showNotification('error', "Failed to load stores");
       }
     } catch (error) {
-      toast.error("Failed to load stores");
+      showNotification('error', "Failed to load stores");
     } finally {
       setIsLoading(false);
     }

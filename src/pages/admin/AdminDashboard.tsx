@@ -6,7 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Users, Store, Star, Plus, BarChart3, Settings, Activity, Shield, X } from "lucide-react";
 import { apiService } from "@/services/api";
-import { toast } from "sonner";
+import { useNotification } from "@/components/ui/notification";
 import { UserManagement } from "./UserManagement";
 import { StoreManagement } from "./StoreManagement";
 import { AddUserForm } from "./AddUserForm";
@@ -34,10 +34,10 @@ export const AdminDashboard: React.FC = () => {
       if (response.data) {
         setDashboardData(response.data);
       } else {
-        toast.error("Failed to load dashboard data");
+        showNotification('error', "Failed to load dashboard data");
       }
     } catch (error) {
-      toast.error("Failed to load dashboard data");
+      showNotification('error', "Failed to load dashboard data");
     } finally {
       setIsLoading(false);
     }

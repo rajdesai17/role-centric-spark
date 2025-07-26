@@ -7,7 +7,7 @@ import { FormField } from "@/components/ui/FormField";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, UserPlus, CheckCircle2 } from "lucide-react";
 import { validateName, validateEmail, validateAddress, validatePassword } from "@/utils/validation";
-import { toast } from "sonner";
+import { useNotification } from "@/components/ui/notification";
 
 export const Signup: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -19,6 +19,7 @@ export const Signup: React.FC = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(false);
   const { signup } = useAuth();
+  const { showNotification } = useNotification();
   const navigate = useNavigate();
 
   const validateForm = () => {
@@ -52,7 +53,7 @@ export const Signup: React.FC = () => {
     e.preventDefault();
     
     if (!validateForm()) {
-      toast.error("Please fix the validation errors");
+      showNotification('error', "Please fix the validation errors");
       return;
     }
 
@@ -61,13 +62,13 @@ export const Signup: React.FC = () => {
     try {
       const success = await signup(formData);
       if (success) {
-        toast.success("Account created successfully!");
+        showNotification('success', "Account created successfully!");
         navigate("/dashboard");
       } else {
-        toast.error("Signup failed. Please try again.");
+        showNotification('error', "Signup failed. Please try again.");
       }
     } catch (error) {
-      toast.error("Signup failed. Please try again.");
+      showNotification('error', "Signup failed. Please try again.");
     } finally {
       setIsLoading(false);
     }

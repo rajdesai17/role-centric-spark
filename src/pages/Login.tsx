@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { FormField } from "@/components/ui/FormField";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Shield, Zap } from "lucide-react";
-import { toast } from "sonner";
+import { useNotification } from "@/components/ui/notification";
 
 export const Login: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -14,6 +14,7 @@ export const Login: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [retryCount, setRetryCount] = useState(0);
   const { login } = useAuth();
+  const { showNotification } = useNotification();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -28,19 +29,20 @@ export const Login: React.FC = () => {
       const result = await login(email, password);
       if (result.success) {
         setRetryCount(0); // Reset retry count on success
+        showNotification('success', "Login successful!");
         navigate("/dashboard");
       } else {
         // Handle rate limiting
         if (result.error?.includes('Too many login attempts')) {
-          toast.error(result.error);
+          showNotification('error', result.error);
           setRetryCount(prev => prev + 1);
         } else {
-          toast.error(result.error || "Invalid email or password");
+          showNotification('error', result.error || "Invalid email or password");
           setRetryCount(prev => prev + 1);
         }
       }
     } catch (error) {
-      toast.error("Login failed. Please try again.");
+      showNotification('error', "Login failed. Please try again.");
       setRetryCount(prev => prev + 1);
     } finally {
       setIsLoading(false);
@@ -50,7 +52,7 @@ export const Login: React.FC = () => {
   const handleDemoLogin = (role: 'admin' | 'user' | 'store_owner') => {
     // Prevent demo login if too many retries
     if (retryCount >= 3) {
-      toast.error("Too many login attempts. Please wait a few minutes.");
+      showNotification('error', "Too many login attempts. Please wait a few minutes.");
       return;
     }
     

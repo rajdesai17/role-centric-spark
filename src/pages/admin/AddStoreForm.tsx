@@ -5,7 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { FormField } from "@/components/ui/FormField";
 import { validateEmail, validateAddress, validateStoreName } from "@/utils/validation";
 import { apiService } from "@/services/api";
-import { toast } from "sonner";
+import { useNotification } from "@/components/ui/notification";
 import { Store } from "lucide-react";
 
 interface StoreOwner {
@@ -36,10 +36,10 @@ export const AddStoreForm: React.FC = () => {
       if (response.data) {
         setStoreOwners(response.data.users);
       } else {
-        toast.error("Failed to load store owners");
+        showNotification('error', "Failed to load store owners");
       }
     } catch (error) {
-      toast.error("Failed to load store owners");
+      showNotification('error', "Failed to load store owners");
     } finally {
       setLoadingOwners(false);
     }
@@ -75,7 +75,7 @@ export const AddStoreForm: React.FC = () => {
     e.preventDefault();
     
     if (!validateForm()) {
-      toast.error("Please fix the validation errors");
+      showNotification('error', "Please fix the validation errors");
       return;
     }
 
@@ -90,14 +90,14 @@ export const AddStoreForm: React.FC = () => {
       });
 
       if (response.data) {
-        toast.success("Store added successfully!");
+        showNotification('success', "Store added successfully!");
         setFormData({ name: "", email: "", address: "", ownerId: "" });
         setErrors({});
       } else {
-        toast.error(response.error || "Failed to add store");
+        showNotification('error', response.error || "Failed to add store");
       }
     } catch (error) {
-      toast.error("Failed to add store");
+      showNotification('error', "Failed to add store");
     } finally {
       setIsLoading(false);
     }

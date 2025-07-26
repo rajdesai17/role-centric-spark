@@ -6,7 +6,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge";
 import { Star, Users, TrendingUp, Store, Activity } from "lucide-react";
 import { apiService } from "@/services/api";
-import { toast } from "sonner";
+import { useNotification } from "@/components/ui/notification";
 import { useAuth } from "@/components/auth/AuthContext";
 
 interface Rating {
@@ -25,6 +25,7 @@ interface Rating {
 
 export const StoreOwnerDashboard: React.FC = () => {
   const { user } = useAuth();
+  const { showNotification } = useNotification();
   const [dashboardData, setDashboardData] = useState<{
     ratings: Rating[];
     avgRating: number;
@@ -54,7 +55,7 @@ export const StoreOwnerDashboard: React.FC = () => {
         setRatingsData(ratingsResponse.data.ratings);
       }
     } catch (error) {
-      toast.error("Failed to load store owner data");
+      showNotification('error', "Failed to load store owner data");
     } finally {
       setIsLoading(false);
     }

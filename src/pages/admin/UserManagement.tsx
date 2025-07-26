@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Search, ArrowUpDown } from "lucide-react";
 import { apiService } from "@/services/api";
-import { toast } from "sonner";
+import { useNotification } from "@/components/ui/notification";
 
 type SortField = 'name' | 'email' | 'address' | 'role';
 type SortDirection = 'asc' | 'desc';
@@ -43,10 +43,10 @@ export const UserManagement: React.FC = () => {
         setUsers(response.data.users);
         setTotal(response.data.total);
       } else {
-        toast.error("Failed to load users");
+        showNotification('error', "Failed to load users");
       }
     } catch (error) {
-      toast.error("Failed to load users");
+      showNotification('error', "Failed to load users");
     } finally {
       setIsLoading(false);
     }

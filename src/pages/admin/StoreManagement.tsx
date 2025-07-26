@@ -5,7 +5,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Button } from "@/components/ui/button";
 import { Search, ArrowUpDown, Store } from "lucide-react";
 import { apiService } from "@/services/api";
-import { toast } from "sonner";
+import { useNotification } from "@/components/ui/notification";
 
 type SortField = 'name' | 'email' | 'address' | 'avgRating';
 type SortDirection = 'asc' | 'desc';
@@ -42,10 +42,10 @@ export const StoreManagement: React.FC = () => {
         setStores(response.data.stores);
         setTotal(response.data.total);
       } else {
-        toast.error("Failed to load stores");
+        showNotification('error', "Failed to load stores");
       }
     } catch (error) {
-      toast.error("Failed to load stores");
+      showNotification('error', "Failed to load stores");
     } finally {
       setIsLoading(false);
     }
