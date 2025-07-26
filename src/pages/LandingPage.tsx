@@ -182,30 +182,30 @@ const LandingPage = () => {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-20 bg-white">
+      <section id="features" className="py-12 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-navy mb-6">
-              Everything you need to succeed
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-navy mb-4">
+              Built to help you move faster
             </h2>
             <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto font-normal">
-              Powerful features designed to streamline your workflow and boost productivity
+              Clean tools, strong access control, and real-time insights.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {features.map((feature, index) => (
-              <Card key={index} className="card hover:shadow-xl transition-all duration-300 p-8">
-                <CardHeader className="text-center pb-6">
-                  <div className="w-16 h-16 bg-purple-pink-gradient rounded-2xl flex items-center justify-center mx-auto mb-6">
+              <Card key={index} className="card hover:shadow-xl transition-all duration-300 h-full">
+                <CardHeader className="text-center pb-4">
+                  <div className="w-12 h-12 bg-purple-pink-gradient rounded-xl flex items-center justify-center mx-auto mb-4">
                     {feature.icon}
                   </div>
-                  <CardTitle className="text-xl font-bold text-navy">
+                  <CardTitle className="text-lg font-bold text-navy">
                     {feature.title}
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="text-center">
-                  <CardDescription className="text-gray-600 leading-relaxed text-base font-normal">
+                <CardContent className="text-center pb-6">
+                  <CardDescription className="text-gray-600 leading-relaxed text-sm font-normal">
                     {feature.description}
                   </CardDescription>
                 </CardContent>
