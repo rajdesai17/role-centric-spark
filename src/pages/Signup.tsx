@@ -166,7 +166,7 @@ export const Signup: React.FC = () => {
 
               <Button
                 type="submit"
-                className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-2xl py-2 text-sm shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                className="w-full bg-slate-900 text-white font-semibold rounded-2xl py-2 text-sm shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
                 disabled={isLoading}
               >
                 {isLoading ? "Creating Account..." : "Create Account"}

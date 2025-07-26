@@ -132,7 +132,7 @@ export const Sidebar: React.FC = () => {
       {/* Sidebar */}
       <div className={`
         fixed left-0 top-0 h-full bg-white border-r border-slate-200 z-50 transition-all duration-300 flex flex-col shadow-lg
-        ${isCollapsed ? 'w-16' : 'w-64'} 
+        ${isCollapsed ? 'w-16' : 'w-72'} 
         lg:relative lg:translate-x-0
         ${!isCollapsed ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
       `}>
@@ -160,12 +160,12 @@ export const Sidebar: React.FC = () => {
         <div className="p-4 border-b border-slate-200 flex-shrink-0 bg-white">
           {!isCollapsed ? (
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-slate-900 rounded-full flex items-center justify-center">
+              <div className="w-10 h-10 bg-slate-900 rounded-full flex items-center justify-center flex-shrink-0">
                 <User className="h-5 w-5 text-white" />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-navy truncate">{user?.name}</p>
-                <p className="text-xs text-gray-500 capitalize">
+                <p className="text-sm font-medium text-navy break-words leading-tight hyphens-auto">{user?.name}</p>
+                <p className="text-xs text-gray-500 capitalize mt-1">
                   {user?.role === 'SYSTEM_ADMIN' ? 'Administrator' : 
                    user?.role === 'STORE_OWNER' ? 'Store Owner' : 'User'}
                 </p>
