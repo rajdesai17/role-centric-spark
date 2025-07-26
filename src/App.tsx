@@ -64,7 +64,7 @@ const App = () => (
               <Route 
                 path="/update-password" 
                 element={
-                  <ProtectedRoute allowedRoles={['NORMAL_USER', 'STORE_OWNER']}>
+                  <ProtectedRoute>
                     <UpdatePassword />
                   </ProtectedRoute>
                 } 
