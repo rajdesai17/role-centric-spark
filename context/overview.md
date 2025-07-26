@@ -1,7 +1,7 @@
-# Store Rating Application - Development Context
+# RoleCentric - Store Rating Platform
 
 ## Project Overview
-Full-stack web application for store ratings with role-based access control (RBAC).
+RoleCentric is a full-stack web application for store ratings with role-based access control (RBAC). It enables users to rate stores, store owners to view their ratings, and administrators to manage the entire platform.
 
 ## Tech Stack
 - **Backend**: Express.js with TypeScript
