@@ -81,15 +81,15 @@ export const Signup: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30 flex items-center justify-center p-4">
+    <div className="min-h-screen flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         {/* Back to Landing Page */}
-        <div className="mb-6">
+        <div className="mb-8">
           <Button
             variant="ghost"
             size="sm"
             onClick={() => navigate('/')}
-            className="text-gray-600 hover:text-gray-900 transition-colors"
+            className="text-gray-600 hover:text-navy transition-colors rounded-full"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Home
@@ -97,27 +97,27 @@ export const Signup: React.FC = () => {
         </div>
 
         {/* Main Signup Card */}
-        <Card className="border-0 shadow-xl bg-white/80 backdrop-blur-md">
-          <CardHeader className="text-center pb-6">
-            <div className="flex items-center justify-center mb-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
-                <UserPlus className="h-6 w-6 text-white" />
+        <Card className="card p-8">
+          <CardHeader className="text-center pb-8">
+            <div className="flex items-center justify-center mb-6">
+              <div className="w-16 h-16 bg-purple-pink-gradient rounded-2xl flex items-center justify-center">
+                <UserPlus className="h-8 w-8 text-white" />
               </div>
             </div>
-            <CardTitle className="text-2xl font-bold text-gray-900">Create Account</CardTitle>
-            <CardDescription className="text-gray-600 mt-2">
+            <CardTitle className="text-3xl font-bold text-navy">Create Account</CardTitle>
+            <CardDescription className="text-gray-600 mt-3 text-lg">
               Join as a new user to explore stores and rate them
             </CardDescription>
           </CardHeader>
           
-          <CardContent className="space-y-6">
+          <CardContent className="space-y-8">
             {/* Requirements Section */}
-            {/* <div className="p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg border border-blue-100">
-              <h4 className="text-sm font-semibold text-gray-900 mb-3 flex items-center">
-                <CheckCircle2 className="h-4 w-4 mr-2 text-blue-600" />
+            {/* <div className="p-6 bg-gradient-to-r from-blue/5 to-purple-pink-gradient/5 rounded-2xl border border-blue/10">
+              <h4 className="text-base font-bold text-navy mb-4 flex items-center">
+                <CheckCircle2 className="h-5 w-5 mr-3 text-blue" />
                 Account Requirements
               </h4>
-              <ul className="text-xs text-gray-600 space-y-1">
+              <ul className="text-sm text-gray-600 space-y-2">
                 <li>• Name: 20-60 characters</li>
                 <li>• Email: Valid email format</li>
                 <li>• Address: Max 400 characters</li>
@@ -125,7 +125,7 @@ export const Signup: React.FC = () => {
               </ul>
             </div> */}
             
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-6">
               <FormField
                 label="Full Name"
                 id="name"
@@ -179,7 +179,7 @@ export const Signup: React.FC = () => {
 
               <Button
                 type="submit"
-                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg hover:shadow-xl transition-all duration-300"
+                className="w-full btn-cta py-4 text-lg"
                 disabled={isLoading}
               >
                 {isLoading ? "Creating Account..." : "Create Account"}
@@ -187,12 +187,12 @@ export const Signup: React.FC = () => {
             </form>
 
             {/* Sign In Link */}
-            <div className="text-center pt-4">
-              <p className="text-sm text-gray-600">
+            <div className="text-center pt-6">
+              <p className="text-gray-600">
                 Already have an account?{" "}
                 <Link 
                   to="/login" 
-                  className="text-blue-600 hover:text-blue-700 font-medium hover:underline transition-colors"
+                  className="text-blue font-bold hover:underline transition-colors"
                 >
                   Sign in
                 </Link>
@@ -203,17 +203,17 @@ export const Signup: React.FC = () => {
 
         {/* Trust Indicators */}
         <div className="mt-8 text-center">
-          <div className="flex items-center justify-center space-x-6 text-xs text-gray-500">
-            <div className="flex items-center space-x-1">
+          <div className="flex items-center justify-center space-x-8 text-sm text-gray-500">
+            <div className="flex items-center space-x-2">
               <div className="w-2 h-2 bg-green-500 rounded-full"></div>
               <span>Secure Registration</span>
             </div>
-            <div className="flex items-center space-x-1">
-              <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+            <div className="flex items-center space-x-2">
+              <div className="w-2 h-2 bg-blue rounded-full"></div>
               <span>Privacy Protected</span>
             </div>
-            <div className="flex items-center space-x-1">
-              <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+            <div className="flex items-center space-x-2">
+              <div className="w-2 h-2 bg-orange rounded-full"></div>
               <span>Free to Join</span>
             </div>
           </div>

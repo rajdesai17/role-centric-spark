@@ -115,6 +115,26 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-peach-gradient font-sans text-navy;
+  }
+
+  h1, .hero-title {
+    @apply text-hero font-extrabold leading-tight tracking-tight;
+  }
+
+  h2, .section-title {
+    @apply text-section-title font-bold leading-snug mt-12 mb-6;
+  }
+
+  section {
+    @apply py-16;
+  }
+
+  .card {
+    @apply rounded-2xl shadow-card bg-white;
+  }
+
+  .btn-cta {
+    @apply bg-orange text-white font-bold rounded-full px-8 py-3 text-lg shadow-cta hover:bg-orange/90 transition;
   }
 }

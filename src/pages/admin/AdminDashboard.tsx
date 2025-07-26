@@ -43,57 +43,57 @@ export const AdminDashboard: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30">
+    <div className="min-h-screen">
       <Navbar />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header Section */}
-        <div className="mb-8">
-          <div className="flex items-center space-x-3 mb-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
-              <BarChart3 className="h-6 w-6 text-white" />
+        <div className="mb-12">
+          <div className="flex items-center space-x-4 mb-6">
+            <div className="w-16 h-16 bg-purple-pink-gradient rounded-2xl flex items-center justify-center">
+              <BarChart3 className="h-8 w-8 text-white" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">
+              <h1 className="text-4xl font-bold text-navy">
                 System Administration
               </h1>
-              <p className="text-gray-600 mt-1">
+              <p className="text-xl text-gray-600 mt-2">
                 Manage users, stores, and monitor platform activity
               </p>
             </div>
           </div>
         </div>
 
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4 bg-white/80 backdrop-blur-sm border border-gray-200 shadow-sm">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-8">
+          <TabsList className="grid w-full grid-cols-4 bg-white rounded-2xl border border-gray-200 shadow-card p-2">
             <TabsTrigger 
               value="overview" 
-              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-purple-600 data-[state=active]:text-white transition-all duration-300"
+              className="data-[state=active]:bg-purple-pink-gradient data-[state=active]:text-white rounded-xl transition-all duration-300 font-medium"
             >
               Overview
             </TabsTrigger>
             <TabsTrigger 
               value="users"
-              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-purple-600 data-[state=active]:text-white transition-all duration-300"
+              className="data-[state=active]:bg-purple-pink-gradient data-[state=active]:text-white rounded-xl transition-all duration-300 font-medium"
             >
               User Management
             </TabsTrigger>
             <TabsTrigger 
               value="stores"
-              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-purple-600 data-[state=active]:text-white transition-all duration-300"
+              className="data-[state=active]:bg-purple-pink-gradient data-[state=active]:text-white rounded-xl transition-all duration-300 font-medium"
             >
               Store Management
             </TabsTrigger>
             <TabsTrigger 
               value="forms"
-              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-purple-600 data-[state=active]:text-white transition-all duration-300"
+              className="data-[state=active]:bg-purple-pink-gradient data-[state=active]:text-white rounded-xl transition-all duration-300 font-medium"
             >
               Add New
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="overview" className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <TabsContent value="overview" className="space-y-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <StatsCard
                 title="Total Users"
                 value={isLoading ? 0 : dashboardData.totalUsers}
@@ -123,15 +123,15 @@ export const AdminDashboard: React.FC = () => {
             <StoreManagement />
           </TabsContent>
 
-          <TabsContent value="forms" className="space-y-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div className="bg-white/80 backdrop-blur-sm rounded-lg border border-gray-200 p-6 shadow-sm">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold text-gray-900">Add New User</h3>
+          <TabsContent value="forms" className="space-y-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div className="card p-8">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-2xl font-bold text-navy">Add New User</h3>
                   <Button
                     onClick={() => setShowAddUser(!showAddUser)}
                     variant={showAddUser ? "secondary" : "default"}
-                    className={showAddUser ? "bg-gray-100 text-gray-700 hover:bg-gray-200" : "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"}
+                    className={showAddUser ? "bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-full" : "bg-purple-pink-gradient hover:opacity-90 rounded-full"}
                   >
                     <Plus className="h-4 w-4 mr-2" />
                     {showAddUser ? "Hide Form" : "Show Form"}
@@ -140,13 +140,13 @@ export const AdminDashboard: React.FC = () => {
                 {showAddUser && <AddUserForm />}
               </div>
 
-              <div className="bg-white/80 backdrop-blur-sm rounded-lg border border-gray-200 p-6 shadow-sm">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold text-gray-900">Add New Store</h3>
+              <div className="card p-8">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-2xl font-bold text-navy">Add New Store</h3>
                   <Button
                     onClick={() => setShowAddStore(!showAddStore)}
                     variant={showAddStore ? "secondary" : "default"}
-                    className={showAddStore ? "bg-gray-100 text-gray-700 hover:bg-gray-200" : "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"}
+                    className={showAddStore ? "bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-full" : "bg-purple-pink-gradient hover:opacity-90 rounded-full"}
                   >
                     <Plus className="h-4 w-4 mr-2" />
                     {showAddStore ? "Hide Form" : "Show Form"}

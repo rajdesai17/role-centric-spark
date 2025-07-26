@@ -18,6 +18,15 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				sans: [
+					'Inter',
+					'Geist',
+					'ui-sans-serif',
+					'system-ui',
+					'sans-serif',
+				],
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -70,12 +79,36 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				peach: {
+					light: '#FFF7F0',
+					DEFAULT: '#FDF6F0',
+				},
+				navy: {
+					DEFAULT: '#181A20',
+				},
+				orange: {
+					DEFAULT: '#FF7A1A',
+				},
+				blue: {
+					DEFAULT: '#007AFF',
+				},
+				purplePink: {
+					from: '#C471F5',
+					to: '#FA71CD',
+				},
+			},
+			backgroundImage: {
+				'peach-gradient': 'linear-gradient(135deg, #FFF7F0 0%, #FDF6F0 100%)',
+				'purple-pink-gradient': 'linear-gradient(90deg, #C471F5 0%, #FA71CD 100%)',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
-				sm: 'calc(var(--radius) - 4px)'
+				sm: 'calc(var(--radius) - 4px)',
+				xl: '1.5rem',
+				'2xl': '2rem',
+				'3xl': '2.5rem',
 			},
 			keyframes: {
 				'accordion-down': {
@@ -98,8 +131,16 @@ export default {
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out'
+			},
+			fontSize: {
+				'hero': ['3rem', '1.1'],
+				'section-title': ['2rem', '1.2'],
+			},
+			boxShadow: {
+				card: '0 4px 32px 0 rgba(24, 26, 32, 0.08)',
+				cta: '0 8px 32px 0 rgba(255, 122, 26, 0.18)',
 			}
 		}
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [],
 } satisfies Config;

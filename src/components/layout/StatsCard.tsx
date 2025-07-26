@@ -15,21 +15,21 @@ export const StatsCard: React.FC<StatsCardProps> = ({
   description
 }) => {
   return (
-    <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 bg-gradient-to-br from-white to-gray-50/50 backdrop-blur-sm">
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
-        <CardTitle className="text-sm font-semibold text-gray-600">
+    <Card className="card hover:shadow-xl transition-all duration-300 p-6">
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
+        <CardTitle className="text-base font-bold text-gray-600">
           {title}
         </CardTitle>
-        <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg flex items-center justify-center">
-          <Icon className="h-5 w-5 text-white" />
+        <div className="w-12 h-12 bg-purple-pink-gradient rounded-xl flex items-center justify-center">
+          <Icon className="h-6 w-6 text-white" />
         </div>
       </CardHeader>
       <CardContent>
-        <div className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+        <div className="text-4xl font-bold bg-purple-pink-gradient bg-clip-text text-transparent">
           {value}
         </div>
         {description && (
-          <p className="text-sm text-gray-600 mt-2 font-medium">
+          <p className="text-base text-gray-600 mt-3 font-medium">
             {description}
           </p>
         )}
