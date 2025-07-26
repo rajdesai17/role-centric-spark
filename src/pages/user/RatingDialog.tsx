@@ -121,7 +121,7 @@ export const RatingDialog: React.FC<RatingDialogProps> = ({
           onClick={() => setRating(starValue)}
           onMouseEnter={() => setHoveredRating(starValue)}
           onMouseLeave={() => setHoveredRating(0)}
-          className="p-1 hover:scale-110 transition-transform"
+          className="p-1 transition-colors duration-200"
         >
           <Star
             className={`h-8 w-8 ${

@@ -13,6 +13,15 @@ import { StoreManagement } from "./StoreManagement";
 import { AddUserForm } from "./AddUserForm";
 import { AddStoreForm } from "./AddStoreForm";
 
+interface RecentActivity {
+  type: string;
+  id: string;
+  title: string;
+  description: string;
+  timestamp: string;
+  data: Record<string, unknown>;
+}
+
 export const AdminDashboard: React.FC = () => {
   const { showNotification } = useNotification();
   const location = useLocation();
@@ -23,14 +32,7 @@ export const AdminDashboard: React.FC = () => {
     totalStores: 0,
     totalRatings: 0
   });
-  const [recentActivity, setRecentActivity] = useState<Array<{
-    type: string;
-    id: string;
-    title: string;
-    description: string;
-    timestamp: string;
-    data: any;
-  }>>([]);
+  const [recentActivity, setRecentActivity] = useState<RecentActivity[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   // Get current tab from URL parameters
@@ -259,7 +261,7 @@ export const AdminDashboard: React.FC = () => {
             </DialogTitle> */}
           </DialogHeader>
           <div className="mt-4">
-            <AddUserForm />
+            <AddUserForm onSuccess={() => setShowAddUserModal(false)} />
           </div>
         </DialogContent>
       </Dialog>
@@ -276,7 +278,7 @@ export const AdminDashboard: React.FC = () => {
             </DialogTitle> */}
           </DialogHeader>
           <div className="mt-4">
-            <AddStoreForm />
+            <AddStoreForm onSuccess={() => setShowAddStoreModal(false)} />
           </div>
         </DialogContent>
       </Dialog>

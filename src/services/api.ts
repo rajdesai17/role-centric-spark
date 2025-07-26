@@ -185,7 +185,7 @@ class ApiService {
   }
 
   // Store Owner endpoints
-  async getStoreOwnerDashboard(): Promise<ApiResponse<{ ratings: any[]; avgRating: number }>> {
+  async getStoreOwnerDashboard(): Promise<ApiResponse<{ averageRating: number; totalReviews: number; trend: string }>> {
     const response = await fetch(`${API_BASE_URL}/store-owner/dashboard`, {
       method: 'GET',
       headers: this.getAuthHeaders(),

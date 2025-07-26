@@ -8,7 +8,11 @@ import { apiService } from "@/services/api";
 import { useNotification } from "@/components/ui/notification";
 import { UserPlus } from "lucide-react";
 
-export const AddUserForm: React.FC = () => {
+interface AddUserFormProps {
+  onSuccess?: () => void;
+}
+
+export const AddUserForm: React.FC<AddUserFormProps> = ({ onSuccess }) => {
   const { showNotification } = useNotification();
   const [formData, setFormData] = useState({
     name: "",
@@ -74,6 +78,8 @@ export const AddUserForm: React.FC = () => {
         showNotification('success', "User added successfully!");
         setFormData({ name: "", email: "", password: "", address: "", role: "" });
         setErrors({});
+        // Call the onSuccess callback to close the modal
+        onSuccess?.();
       } else {
         showNotification('error', response.error || "Failed to add user");
       }

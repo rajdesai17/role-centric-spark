@@ -27,8 +27,9 @@ export const StoreOwnerDashboard: React.FC = () => {
   const { user } = useAuth();
   const { showNotification } = useNotification();
   const [dashboardData, setDashboardData] = useState<{
-    ratings: Rating[];
-    avgRating: number;
+    averageRating: number;
+    totalReviews: number;
+    trend: string;
   } | null>(null);
   const [ratingsData, setRatingsData] = useState<Rating[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -122,19 +123,19 @@ export const StoreOwnerDashboard: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <StatsCard
           title="Average Rating"
-          value={dashboardData.avgRating.toFixed(1)}
+          value={dashboardData.averageRating ? dashboardData.averageRating.toFixed(1) : "0.0"}
           icon={Star}
           description="Out of 5 stars"
         />
         <StatsCard
           title="Total Reviews"
-          value={ratingsData.length}
+          value={dashboardData.totalReviews || 0}
           icon={Users}
           description="Customer ratings"
         />
         <StatsCard
           title="Rating Trend"
-          value={dashboardData.avgRating >= 4 ? "Excellent" : dashboardData.avgRating >= 3 ? "Good" : "Needs Improvement"}
+          value={dashboardData.averageRating && dashboardData.averageRating >= 4 ? "Excellent" : dashboardData.averageRating && dashboardData.averageRating >= 3 ? "Good" : "Needs Improvement"}
           icon={TrendingUp}
           description="Performance indicator"
         />

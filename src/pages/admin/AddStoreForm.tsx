@@ -14,7 +14,11 @@ interface StoreOwner {
   email: string;
 }
 
-export const AddStoreForm: React.FC = () => {
+interface AddStoreFormProps {
+  onSuccess?: () => void;
+}
+
+export const AddStoreForm: React.FC<AddStoreFormProps> = ({ onSuccess }) => {
   const { showNotification } = useNotification();
   const [formData, setFormData] = useState({
     name: "",
@@ -94,6 +98,8 @@ export const AddStoreForm: React.FC = () => {
         showNotification('success', "Store added successfully!");
         setFormData({ name: "", email: "", address: "", ownerId: "" });
         setErrors({});
+        // Call the onSuccess callback to close the modal
+        onSuccess?.();
       } else {
         showNotification('error', response.error || "Failed to add store");
       }
