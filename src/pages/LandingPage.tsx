@@ -13,7 +13,6 @@ import {
   Store,
   Star as StarIcon,
   ChevronRight,
-  Play,
   Lock,
   Sparkles
 } from "lucide-react";
@@ -79,7 +78,7 @@ const LandingPage = () => {
                   <div className="w-10 h-10 bg-slate-900 rounded-xl flex items-center justify-center shadow-lg">
                     <span className="text-white font-bold text-lg">R</span>
                   </div>
-                  <span className="text-2xl font-bold bg-gradient-to-r from-slate-900 to-slate-600 bg-clip-text text-transparent">
+                  <span className="text-2xl font-bold text-purple-700">
                     RoleApp
                   </span>
                 </div>
@@ -98,13 +97,13 @@ const LandingPage = () => {
                   >
                     Sign In
                   </Button>
-                  <Button 
-                    size="sm" 
-                    onClick={() => navigate('/signup')}
-                    className="bg-slate-900 text-white font-semibold rounded-xl px-6 py-2 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-                  >
-                    Get Started
-                  </Button>
+                                <Button
+                size="sm"
+                onClick={() => navigate('/signup')}
+                className="bg-slate-900 text-white font-semibold rounded-xl px-6 py-2 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+              >
+                Sign Up
+              </Button>
                 </div>
 
                 {/* Mobile Menu Button */}
@@ -136,12 +135,12 @@ const LandingPage = () => {
                     >
                       Sign In
                     </Button>
-                    <Button 
-                      size="sm" 
+                                        <Button
+                      size="sm"
                       onClick={() => navigate('/signup')}
                       className="bg-slate-900 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300 justify-start"
                     >
-                      Get Started
+                      Sign Up
                     </Button>
                   </div>
                 </div>
@@ -155,40 +154,27 @@ const LandingPage = () => {
       <section className="relative overflow-hidden pt-24 pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <Badge className="mb-8 px-4 py-2 text-sm font-medium bg-purple-600 text-white rounded-full shadow-sm">
-              <Sparkles className="h-4 w-4 mr-2" />
-              Modern Role Management Platform
-            </Badge>
+                    <Badge className="mb-8 px-4 py-2 text-sm font-medium bg-purple-700 text-white rounded-full shadow-sm">
+          <Sparkles className="h-4 w-4 mr-2" />
+          Modern Role Management Platform
+        </Badge>
             
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-slate-900 mb-8 leading-tight">
-              Store Rating
-              <span className="block bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                System
-              </span>
+              Store Rating System
             </h1>
             
             <p className="text-xl md:text-2xl text-slate-600 mb-12 max-w-4xl mx-auto leading-relaxed font-normal">
-              Streamline your business operations with our comprehensive role-based management platform. 
-              Manage users, stores, and customer ratings with enterprise-grade security.
+              A comprehensive platform for managing users, stores, and customer ratings with role-based access control.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
+            <div className="flex justify-center items-center mb-16">
               <Button 
                 size="lg" 
                 className="bg-slate-900 text-white font-semibold rounded-2xl px-8 py-4 text-lg shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
                 onClick={() => navigate('/signup')}
               >
-                Start Free Trial
+                Get Started
                 <ArrowRight className="ml-3 h-5 w-5" />
-              </Button>
-              <Button 
-                variant="outline" 
-                size="lg" 
-                className="px-8 py-4 text-lg font-semibold border-2 border-slate-300 text-slate-700 hover:bg-slate-50 rounded-2xl transition-all duration-300 shadow-sm"
-                onClick={() => navigate('/login')}
-              >
-                <Play className="mr-3 h-5 w-5" />
-                Watch Demo
               </Button>
             </div>
 
@@ -201,18 +187,9 @@ const LandingPage = () => {
       <section id="features" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <Badge className="mb-6 px-4 py-2 text-sm font-medium bg-slate-100 text-slate-700 rounded-full">
+            <h2 className="text-4xl md:text-5xl font-bold text-purple-700 mb-6">
               Features
-            </Badge>
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
-              Everything you need to
-              <span className="block bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                scale your business
-              </span>
             </h2>
-            <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-              Powerful tools designed to streamline your operations and enhance customer experience.
-            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
