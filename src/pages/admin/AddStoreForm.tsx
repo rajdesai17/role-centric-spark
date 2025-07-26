@@ -15,6 +15,7 @@ interface StoreOwner {
 }
 
 export const AddStoreForm: React.FC = () => {
+  const { showNotification } = useNotification();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -96,8 +97,13 @@ export const AddStoreForm: React.FC = () => {
       } else {
         showNotification('error', response.error || "Failed to add store");
       }
-    } catch (error) {
-      showNotification('error', "Failed to add store");
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { status?: number } };
+      if (axiosError.response?.status === 409) {
+        showNotification('error', "A store with this email already exists. Please use a different email address.");
+      } else {
+        showNotification('error', "Failed to add store. Please try again.");
+      }
     } finally {
       setIsLoading(false);
     }

@@ -24,6 +24,7 @@ interface User {
 }
 
 export const UserManagement: React.FC = () => {
+  const { showNotification } = useNotification();
   const [searchTerm, setSearchTerm] = useState("");
   const [sortField, setSortField] = useState<SortField>('name');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');

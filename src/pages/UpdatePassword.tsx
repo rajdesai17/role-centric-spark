@@ -6,7 +6,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { FormField } from "@/components/ui/FormField";
 import { validatePassword } from "@/utils/validation";
 import { useNotification } from "@/components/ui/notification";
-import { Navbar } from "@/components/layout/Navbar";
+import { DashboardLayout } from "@/components/layout/DashboardLayout";
+import { Lock } from "lucide-react";
 
 export const UpdatePassword: React.FC = () => {
   const [passwords, setPasswords] = useState({
@@ -77,17 +78,24 @@ export const UpdatePassword: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background to-muted">
-      <Navbar />
-      <div className="flex items-center justify-center p-4 pt-8">
-        <Card className="w-full max-w-md shadow-elegant">
-          <CardHeader className="text-center">
-            <CardTitle className="text-2xl font-bold">Update Password</CardTitle>
-            <CardDescription>
-              Change your account password
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
+    <DashboardLayout
+      title="Update Password"
+      subtitle="Change your account password"
+      icon={Lock}
+    >
+      <div className="max-w-md mx-auto">
+        <Card className="shadow-soft">
+          <CardContent className="p-6">
+            <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+              <h4 className="text-sm font-medium text-blue-800 mb-2">Password Requirements:</h4>
+              <ul className="text-xs text-blue-700 space-y-1">
+                <li>• 8-16 characters long</li>
+                <li>• At least 1 uppercase letter</li>
+                <li>• At least 1 special character</li>
+                <li>• Must be different from current password</li>
+              </ul>
+            </div>
+            
             <form onSubmit={handleSubmit} className="space-y-4">
               <FormField
                 label="Current Password"
@@ -106,7 +114,7 @@ export const UpdatePassword: React.FC = () => {
                 type="password"
                 value={passwords.new}
                 onChange={(value) => updateField('new', value)}
-                placeholder="8-16 chars, 1 uppercase, 1 special char"
+                placeholder="Enter your new password"
                 error={errors.new}
                 required
               />
@@ -122,7 +130,7 @@ export const UpdatePassword: React.FC = () => {
                 required
               />
 
-              <div className="flex gap-3">
+              <div className="flex gap-3 pt-4">
                 <Button
                   type="button"
                   variant="outline"
@@ -133,7 +141,7 @@ export const UpdatePassword: React.FC = () => {
                 </Button>
                 <Button
                   type="submit"
-                  className="flex-1"
+                  className="flex-1 bg-purple-pink-gradient text-white font-medium hover:opacity-90 transition"
                   disabled={isLoading}
                 >
                   {isLoading ? "Updating..." : "Update Password"}
@@ -143,6 +151,6 @@ export const UpdatePassword: React.FC = () => {
           </CardContent>
         </Card>
       </div>
-    </div>
+    </DashboardLayout>
   );
 };

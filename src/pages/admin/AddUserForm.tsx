@@ -9,6 +9,7 @@ import { useNotification } from "@/components/ui/notification";
 import { UserPlus } from "lucide-react";
 
 export const AddUserForm: React.FC = () => {
+  const { showNotification } = useNotification();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -76,8 +77,13 @@ export const AddUserForm: React.FC = () => {
       } else {
         showNotification('error', response.error || "Failed to add user");
       }
-    } catch (error) {
-      showNotification('error', "Failed to add user");
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { status?: number } };
+      if (axiosError.response?.status === 409) {
+        showNotification('error', "A user with this email already exists. Please use a different email address.");
+      } else {
+        showNotification('error', "Failed to add user. Please try again.");
+      }
     } finally {
       setIsLoading(false);
     }
