@@ -4,7 +4,7 @@ import { StatsCard } from "@/components/layout/StatsCard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Star, Users, TrendingUp } from "lucide-react";
+import { Star, Users, TrendingUp, Store, Activity } from "lucide-react";
 import { apiService } from "@/services/api";
 import { toast } from "sonner";
 import { useAuth } from "@/components/auth/AuthContext";
@@ -62,17 +62,18 @@ export const StoreOwnerDashboard: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-background to-muted">
+      <div className="min-h-screen bg-gray-50">
         <Navbar />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <Card className="shadow-elegant">
-            <CardContent className="flex flex-col items-center justify-center py-12">
-              <h2 className="text-2xl font-bold text-foreground mb-4">Loading...</h2>
-              <p className="text-muted-foreground">
-                Fetching your store data...
-              </p>
-            </CardContent>
-          </Card>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="bg-white rounded-xl border border-gray-200 p-8">
+            <div className="flex flex-col items-center justify-center py-12">
+              <div className="w-12 h-12 bg-purple-pink-gradient rounded-xl flex items-center justify-center mb-4">
+                <Activity className="h-6 w-6 text-white" />
+              </div>
+              <h2 className="text-xl font-bold text-navy mb-2">Loading...</h2>
+              <p className="text-gray-600">Fetching your store data...</p>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -80,17 +81,18 @@ export const StoreOwnerDashboard: React.FC = () => {
 
   if (!dashboardData) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-background to-muted">
+      <div className="min-h-screen bg-gray-50">
         <Navbar />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <Card className="shadow-elegant">
-            <CardContent className="flex flex-col items-center justify-center py-12">
-              <h2 className="text-2xl font-bold text-foreground mb-4">No Store Found</h2>
-              <p className="text-muted-foreground">
-                You don't have a store associated with your account.
-              </p>
-            </CardContent>
-          </Card>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="bg-white rounded-xl border border-gray-200 p-8">
+            <div className="flex flex-col items-center justify-center py-12">
+              <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center mb-4">
+                <Store className="h-6 w-6 text-gray-400" />
+              </div>
+              <h2 className="text-xl font-bold text-navy mb-2">No Store Found</h2>
+              <p className="text-gray-600">You don't have a store associated with your account.</p>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -108,19 +110,24 @@ export const StoreOwnerDashboard: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background to-muted">
+    <div className="min-h-screen bg-gray-50">
       <Navbar />
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground mb-2">
-            Store Owner Dashboard
-          </h1>
-          <p className="text-muted-foreground">
-            Store analytics and customer feedback overview
-          </p>
+          <div className="flex items-center space-x-3 mb-4">
+            <div className="w-10 h-10 bg-purple-pink-gradient rounded-xl flex items-center justify-center">
+              <Store className="h-5 w-5 text-white" />
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold text-navy">Store Owner Dashboard</h1>
+              <p className="text-gray-600">Store analytics and customer feedback overview</p>
+            </div>
+          </div>
         </div>
 
+        {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <StatsCard
             title="Average Rating"
@@ -142,25 +149,29 @@ export const StoreOwnerDashboard: React.FC = () => {
           />
         </div>
 
-        <Card className="shadow-soft">
-          <CardHeader>
-            <CardTitle>Customer Ratings</CardTitle>
-          </CardHeader>
-          <CardContent>
+        {/* Customer Ratings Table */}
+        <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+          <div className="p-6 border-b border-gray-200">
+            <h2 className="text-lg font-semibold text-navy flex items-center">
+              <Star className="h-5 w-5 mr-2 text-purple-600" />
+              Customer Ratings
+            </h2>
+          </div>
+          <div className="p-6">
             {ratingsData.length > 0 ? (
-              <div className="rounded-md border">
+              <div className="rounded-lg border border-gray-200 overflow-hidden">
                 <Table>
                   <TableHeader>
-                    <TableRow>
-                      <TableHead>Customer</TableHead>
-                      <TableHead>Rating</TableHead>
-                      <TableHead>Date</TableHead>
+                    <TableRow className="bg-gray-50">
+                      <TableHead className="font-semibold text-navy">Customer</TableHead>
+                      <TableHead className="font-semibold text-navy">Rating</TableHead>
+                      <TableHead className="font-semibold text-navy">Date</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {ratingsData.map((rating) => (
-                      <TableRow key={rating.id}>
-                        <TableCell className="font-medium">
+                      <TableRow key={rating.id} className="hover:bg-gray-50">
+                        <TableCell className="font-medium text-navy">
                           {rating.user.name}
                         </TableCell>
                         <TableCell>
@@ -168,12 +179,12 @@ export const StoreOwnerDashboard: React.FC = () => {
                             <div className="flex items-center gap-1">
                               {renderStars(rating.rating)}
                             </div>
-                            <Badge variant="secondary">
+                            <Badge variant="secondary" className="bg-blue-100 text-blue-700 border-blue-200">
                               {rating.rating}/5
                             </Badge>
                           </div>
                         </TableCell>
-                        <TableCell>
+                        <TableCell className="text-gray-600">
                           {new Date(rating.createdAt).toLocaleDateString()}
                         </TableCell>
                       </TableRow>
@@ -183,17 +194,19 @@ export const StoreOwnerDashboard: React.FC = () => {
               </div>
             ) : (
               <div className="text-center py-12">
-                <Star className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                <h3 className="text-lg font-medium text-foreground mb-2">
+                <div className="w-16 h-16 bg-gray-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+                  <Star className="h-8 w-8 text-gray-400" />
+                </div>
+                <h3 className="text-lg font-semibold text-navy mb-2">
                   No Ratings Yet
                 </h3>
-                <p className="text-muted-foreground">
+                <p className="text-gray-600">
                   Your store hasn't received any customer ratings yet.
                 </p>
               </div>
             )}
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
     </div>
   );

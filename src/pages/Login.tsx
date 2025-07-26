@@ -12,29 +12,49 @@ export const Login: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [retryCount, setRetryCount] = useState(0);
   const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Prevent rapid successive attempts
+    if (isLoading) return;
+    
     setIsLoading(true);
 
     try {
-      const success = await login(email, password);
-      if (success) {
+      const result = await login(email, password);
+      if (result.success) {
         toast.success("Login successful!");
+        setRetryCount(0); // Reset retry count on success
         navigate("/dashboard");
       } else {
-        toast.error("Invalid email or password");
+        // Handle rate limiting
+        if (result.error?.includes('Too many login attempts')) {
+          toast.error(result.error);
+          setRetryCount(prev => prev + 1);
+        } else {
+          toast.error(result.error || "Invalid email or password");
+          setRetryCount(prev => prev + 1);
+        }
       }
     } catch (error) {
       toast.error("Login failed. Please try again.");
+      setRetryCount(prev => prev + 1);
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleDemoLogin = (role: 'admin' | 'user' | 'store_owner') => {
+    // Prevent demo login if too many retries
+    if (retryCount >= 3) {
+      toast.error("Too many login attempts. Please wait a few minutes.");
+      return;
+    }
+    
     const demoCredentials = {
       admin: { email: 'admin@system.com', password: 'Admin123!' },
       user: { email: 'john@example.com', password: 'User123!' },
@@ -100,10 +120,16 @@ export const Login: React.FC = () => {
               <Button
                 type="submit"
                 className="w-full btn-cta py-4 text-lg"
-                disabled={isLoading}
+                disabled={isLoading || retryCount >= 3}
               >
-                {isLoading ? "Signing in..." : "Sign In"}
+                {isLoading ? "Signing in..." : retryCount >= 3 ? "Too Many Attempts" : "Sign In"}
               </Button>
+              
+              {retryCount >= 3 && (
+                <div className="text-center text-sm text-red-600 bg-red-50 p-3 rounded-lg border border-red-200">
+                  Too many login attempts. Please wait a few minutes before trying again.
+                </div>
+              )}
             </form>
 
             {/* Sign Up Link */}

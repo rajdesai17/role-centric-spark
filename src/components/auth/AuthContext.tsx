@@ -13,7 +13,8 @@ interface User {
 
 interface AuthContextType {
   user: User | null;
-  login: (email: string, password: string) => Promise<boolean>;
+  isLoading: boolean;
+  login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
   logout: () => void;
   signup: (userData: Omit<User, 'id' | 'role' | 'createdAt' | 'updatedAt'>) => Promise<boolean>;
   updatePassword: (currentPassword: string, newPassword: string) => Promise<boolean>;
@@ -31,16 +32,34 @@ export const useAuth = () => {
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const savedUser = localStorage.getItem('currentUser');
-    const token = localStorage.getItem('authToken');
-    if (savedUser && token) {
-      setUser(JSON.parse(savedUser));
-    }
+    const initializeAuth = () => {
+      try {
+        const savedUser = localStorage.getItem('currentUser');
+        const token = localStorage.getItem('authToken');
+        
+        if (savedUser && token) {
+          const parsedUser = JSON.parse(savedUser);
+          setUser(parsedUser);
+        }
+      } catch (error) {
+        console.error('Error initializing auth:', error);
+        // Clear corrupted data
+        localStorage.removeItem('currentUser');
+        localStorage.removeItem('authToken');
+      }
+      // Set loading to false immediately after initialization
+      setIsLoading(false);
+    };
+
+    // Use setTimeout to ensure this runs after the initial render
+    const timer = setTimeout(initializeAuth, 0);
+    return () => clearTimeout(timer);
   }, []);
 
-  const login = async (email: string, password: string): Promise<boolean> => {
+  const login = async (email: string, password: string): Promise<{ success: boolean; error?: string }> => {
     try {
       const response = await apiService.login(email, password);
       if (response.data) {
@@ -48,14 +67,44 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setUser(user);
         localStorage.setItem('currentUser', JSON.stringify(user));
         localStorage.setItem('authToken', token);
-        return true;
+        return { success: true };
       } else {
         console.error('Login failed:', response.error);
-        return false;
+        
+        // Handle rate limiting specifically
+        if (response.error?.includes('Too many authentication attempts') || response.error?.includes('429')) {
+          return { 
+            success: false, 
+            error: 'Too many login attempts. Please wait a few minutes before trying again.' 
+          };
+        }
+        
+        return { 
+          success: false, 
+          error: response.error || 'Login failed. Please check your credentials.' 
+        };
       }
     } catch (error) {
       console.error('Login error:', error);
-      return false;
+      
+      // Handle network errors
+      if (error instanceof Error) {
+        if (error.message.includes('429') || error.message.includes('Too many requests')) {
+          return { 
+            success: false, 
+            error: 'Too many login attempts. Please wait a few minutes before trying again.' 
+          };
+        }
+        return { 
+          success: false, 
+          error: error.message || 'Network error. Please check your connection.' 
+        };
+      }
+      
+      return { 
+        success: false, 
+        error: 'An unexpected error occurred. Please try again.' 
+      };
     }
   };
 
@@ -100,7 +149,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, signup, updatePassword }}>
+    <AuthContext.Provider value={{ user, isLoading, login, logout, signup, updatePassword }}>
       {children}
     </AuthContext.Provider>
   );

@@ -97,35 +97,21 @@ export const Signup: React.FC = () => {
         </div>
 
         {/* Main Signup Card */}
-        <Card className="card p-8">
-          <CardHeader className="text-center pb-8">
-            <div className="flex items-center justify-center mb-6">
-              <div className="w-16 h-16 bg-purple-pink-gradient rounded-2xl flex items-center justify-center">
-                <UserPlus className="h-8 w-8 text-white" />
+        <Card className="card p-4">
+          <CardHeader className="text-center pb-4">
+            <div className="flex items-center justify-center mb-3">
+              <div className="w-10 h-10 bg-purple-pink-gradient rounded-lg flex items-center justify-center">
+                <UserPlus className="h-5 w-5 text-white" />
               </div>
             </div>
-            <CardTitle className="text-3xl font-bold text-navy">Create Account</CardTitle>
-            <CardDescription className="text-gray-600 mt-3 text-lg">
+            <CardTitle className="text-xl font-bold text-navy">Create Account</CardTitle>
+            <CardDescription className="text-gray-600 mt-1 text-sm">
               Join as a new user to explore stores and rate them
             </CardDescription>
           </CardHeader>
 
-          <CardContent className="space-y-8">
-            {/* Requirements Section */}
-            <div className="p-6 bg-gradient-to-r from-blue/5 to-purple-pink-gradient/5 rounded-2xl border border-blue/10">
-              <h4 className="text-base font-bold text-navy mb-4 flex items-center">
-                <CheckCircle2 className="h-5 w-5 mr-3 text-blue" />
-                Account Requirements
-              </h4>
-              <ul className="text-sm text-gray-600 space-y-2">
-                <li>• Name: 20-60 characters</li>
-                <li>• Email: Valid email format</li>
-                <li>• Address: Max 400 characters</li>
-                <li>• Password: 8-16 characters, 1 uppercase, 1 special character</li>
-              </ul>
-            </div>
-
-            <form onSubmit={handleSubmit} className="space-y-6">
+          <CardContent className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-3">
               <FormField
                 label="Full Name"
                 id="name"
@@ -179,7 +165,7 @@ export const Signup: React.FC = () => {
 
               <Button
                 type="submit"
-                className="w-full btn-cta py-4 text-lg"
+                className="w-full btn-cta py-2 text-sm"
                 disabled={isLoading}
               >
                 {isLoading ? "Creating Account..." : "Create Account"}
@@ -187,8 +173,8 @@ export const Signup: React.FC = () => {
             </form>
 
             {/* Sign In Link */}
-            <div className="text-center pt-6">
-              <p className="text-gray-600">
+            <div className="text-center pt-2">
+              <p className="text-gray-600 text-xs">
                 Already have an account?{" "}
                 <Link
                   to="/login"
