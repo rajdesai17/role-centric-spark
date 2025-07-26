@@ -12,6 +12,7 @@ import { AdminDashboard } from "@/pages/admin/AdminDashboard";
 import { UserDashboard } from "@/pages/user/UserDashboard";
 import { StoreOwnerDashboard } from "@/pages/store-owner/StoreOwnerDashboard";
 import NotFound from "./pages/NotFound";
+import LandingPage from "@/pages/LandingPage";
 
 const queryClient = new QueryClient();
 
@@ -40,7 +41,7 @@ const App = () => (
       <AuthProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Navigate to="/login" replace />} />
+            <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route 

@@ -1,7 +1,5 @@
-import { Navigate } from "react-router-dom";
+import LandingPage from "./LandingPage";
 
-const Index = () => {
-  return <Navigate to="/login" replace />;
-};
+const Index = () => <LandingPage />;
 
 export default Index;
