@@ -9,7 +9,7 @@ Store Rating App is a modern web application built with React, TypeScript, and E
 - **Store Owners**: View ratings received and analytics for their stores
 - **System Administrators**: Manage users, stores, and view platform analytics
 
-## ✅ Requirements Satisfaction
+## ✅ Features
 
 ### User Roles & Permissions
 - ✅ **System Administrator**: Full CRUD operations for users and stores

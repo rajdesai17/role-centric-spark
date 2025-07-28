@@ -11,6 +11,7 @@ interface RatingDialogProps {
   onClose: () => void;
   storeId: string | null;
   currentRating?: number;
+  ratingId?: string;
   onRatingSubmitted?: () => void;
 }
 
@@ -29,6 +30,7 @@ export const RatingDialog: React.FC<RatingDialogProps> = ({
   onClose,
   storeId,
   currentRating,
+  ratingId,
   onRatingSubmitted
 }) => {
   const { user } = useAuth();
@@ -73,13 +75,9 @@ export const RatingDialog: React.FC<RatingDialogProps> = ({
     setIsLoading(true);
 
     try {
-      if (currentRating) {
-        // This would be for updating an existing rating
-        // For now, we'll create a new rating since the API doesn't have update endpoint
-        const response = await apiService.createRating({
-          storeId,
-          rating
-        });
+      if (currentRating && ratingId) {
+        // Update existing rating
+        const response = await apiService.updateRating(ratingId, rating);
         
         if (response.data) {
           showNotification('success', "Rating updated successfully!");

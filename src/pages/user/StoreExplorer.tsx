@@ -20,6 +20,7 @@ interface Store {
   averageRating: number;
   totalRatings: number;
   userRating?: number;
+  userRatingId?: string;
 }
 
 interface UserRating {
@@ -73,9 +74,9 @@ export const StoreExplorer: React.FC = () => {
 
   const getUserRating = (storeId: string): UserRating | undefined => {
     const store = stores.find(s => s.id === storeId);
-    if (store?.userRating) {
+    if (store?.userRating && store?.userRatingId) {
       return {
-        id: storeId, // Using storeId as fallback since we don't have rating ID
+        id: store.userRatingId,
         rating: store.userRating,
         createdAt: store.createdAt // Using store creation date as fallback
       };
@@ -241,6 +242,7 @@ export const StoreExplorer: React.FC = () => {
             }}
             storeId={selectedStore}
             currentRating={selectedStore ? getUserRating(selectedStore)?.rating : undefined}
+            ratingId={selectedStore ? getUserRating(selectedStore)?.id : undefined}
             onRatingSubmitted={handleRatingSubmitted}
           />
         </>

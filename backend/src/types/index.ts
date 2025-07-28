@@ -25,6 +25,7 @@ export interface StoreDataWithRating extends StoreData {
 
 export interface StoreWithUserRating extends StoreDataWithRating {
   userRating?: number;
+  userRatingId?: string;
 }
 
 export interface RatingData {

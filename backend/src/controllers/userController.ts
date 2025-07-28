@@ -25,6 +25,7 @@ export const getStores = async (req: Request, res: Response): Promise<Response> 
       include: {
         ratings: {
           select: {
+            id: true,
             rating: true,
             userId: true,
           },
@@ -41,7 +42,7 @@ export const getStores = async (req: Request, res: Response): Promise<Response> 
         ? store.ratings.reduce((sum, r) => sum + r.rating, 0) / totalRatings
         : 0;
 
-      const userRating = store.ratings.find(r => r.userId === userId)?.rating;
+      const userRating = store.ratings.find(r => r.userId === userId);
 
       const { ratings, ...storeWithoutRatings } = store;
 
@@ -49,7 +50,8 @@ export const getStores = async (req: Request, res: Response): Promise<Response> 
         ...storeWithoutRatings,
         averageRating,
         totalRatings,
-        userRating,
+        userRating: userRating?.rating,
+        userRatingId: userRating?.id,
       };
     });
 
