@@ -1,4 +1,4 @@
-# Store Rating App - Full Stack Web Application
+# Store Rating App
 
 A comprehensive full-stack web application for store ratings with role-based access control (RBAC). Users can rate stores, store owners can view their ratings, and administrators can manage the entire platform.
 
@@ -54,14 +54,14 @@ Store Rating App is a modern web application built with React, TypeScript, and E
 ### Prerequisites
 - Node.js (v18 or higher)
 - npm or yarn
-- PostgreSQL database
+- PostgreSQL database (running locally or remotely)
 
 ### Installation & Setup
 
 1. **Clone the repository**
    ```bash
    git clone <your-repo-url>
-   cd store-rating-app
+   cd role-centric-spark
    ```
 
 2. **Install dependencies**
@@ -92,6 +92,8 @@ Store Rating App is a modern web application built with React, TypeScript, and E
    FRONTEND_URL=http://localhost:3000
    ```
 
+   **Important**: Replace `username`, `password`, and `store_rating_db` with your actual PostgreSQL credentials and database name.
+
 4. **Database Setup**
    ```bash
    # Navigate to backend directory
@@ -105,12 +107,24 @@ Store Rating App is a modern web application built with React, TypeScript, and E
    ```
 
 5. **Start the application**
+   
+   **Option 1: Using separate terminals**
    ```bash
    # Terminal 1: Start backend server
    cd backend
    npm run dev
    
-   # Terminal 2: Start frontend development server
+   # Terminal 2: Start frontend development server (in a new terminal)
+   npm run dev
+   ```
+
+   **Option 2: Using PowerShell (Windows)**
+   ```powershell
+   # Start backend server
+   cd backend
+   npm run dev
+   
+   # In a new PowerShell window, start frontend
    npm run dev
    ```
 
@@ -121,10 +135,16 @@ Store Rating App is a modern web application built with React, TypeScript, and E
 ## 📁 Project Structure
 
 ```
-store-rating-app/
+role-centric-spark/
 ├── src/                    # Frontend source code
 │   ├── components/         # Reusable UI components
+│   │   ├── auth/          # Authentication components
+│   │   ├── layout/        # Layout components
+│   │   └── ui/            # UI components (shadcn/ui)
 │   ├── pages/             # Page components
+│   │   ├── admin/         # Admin pages
+│   │   ├── user/          # User pages
+│   │   └── store-owner/   # Store owner pages
 │   ├── services/          # API services
 │   └── utils/             # Utility functions
 ├── backend/               # Backend source code
@@ -132,7 +152,8 @@ store-rating-app/
 │   │   ├── controllers/   # Route controllers
 │   │   ├── middleware/    # Express middleware
 │   │   ├── routes/        # API routes
-│   │   └── services/      # Business logic
+│   │   ├── types/         # TypeScript type definitions
+│   │   └── utils/         # Utility functions
 │   └── prisma/            # Database schema and migrations
 └── public/                # Static assets
 ```
@@ -146,9 +167,10 @@ store-rating-app/
 
 ### Security Features
 - JWT token-based authentication
-- Password hashing with bcrypt
+- Password hashing with bcrypt (12 rounds)
 - Role-based route protection
 - Input validation and sanitization
+- Rate limiting on API endpoints
 
 ## 🎨 UI/UX Features
 
@@ -157,6 +179,7 @@ store-rating-app/
 - Intuitive navigation with sidebar
 - Real-time search and filtering
 - Loading states and error handling
+- Toast notifications for user feedback
 
 ## 📊 Database Schema
 
@@ -164,6 +187,11 @@ store-rating-app/
 - **Users**: Authentication and user management
 - **Stores**: Store information and ownership
 - **Ratings**: User ratings with constraints (one rating per user per store)
+
+### Key Relationships
+- Users can have multiple stores (as store owners)
+- Users can rate multiple stores
+- Each user can only rate a store once (unique constraint)
 
 ## 🔧 Development Commands
 
@@ -182,6 +210,8 @@ npm run dev          # Start development server
 npm run build        # Build for production
 npm start            # Start production server
 npx prisma migrate dev  # Run database migrations
+npx prisma generate     # Generate Prisma client
+npx prisma studio       # Open Prisma Studio (database GUI)
 ```
 
 ## 🚀 Deployment
@@ -198,6 +228,28 @@ npm run build
 npm start
 ```
 
----
+## 🐛 Troubleshooting
 
-**Built with ❤️ using React, TypeScript, and Express.js**
+### Common Issues
+
+1. **Database Connection Error**
+   - Ensure PostgreSQL is running
+   - Check your DATABASE_URL in backend/.env
+   - Verify database credentials
+
+2. **Port Already in Use**
+   - Backend: Change PORT in backend/.env
+   - Frontend: Change port in vite.config.ts
+
+3. **CORS Issues**
+   - Ensure FRONTEND_URL in backend/.env matches your frontend URL
+   - Check that the backend is running on the correct port
+
+4. **Prisma Migration Issues**
+   ```bash
+   cd backend
+   npx prisma migrate reset  # Reset database (WARNING: deletes all data)
+   npx prisma migrate dev    # Run migrations
+   ```
+
+---
